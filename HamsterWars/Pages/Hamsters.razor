@@ -1,0 +1,36 @@
+﻿@page "/Hamster"
+
+<h3>Hamsters</h3>
+
+
+@if (ImagesSource is not null)
+{
+    <div>
+        <img src="@ImagesSource" />
+        <p role="status">Likes: @currentCount</p>
+        <button class="btn btn-primary" @onclick="IncrementCount">Like</button>
+    </div>
+}
+@for (var i = 1; i < 41; i++)
+{
+
+    var imageId = i;
+    <button @onclick="()=> ShowImage(imageId)">Image @imageId</button>
+
+}
+
+
+@code {
+    private string? ImagesSource;
+    private int currentCount = 0;
+
+    private void ShowImage(int id)
+    {
+        ImagesSource = $"Content/Photos/hamster-{id}.jpg";
+    }
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+}
