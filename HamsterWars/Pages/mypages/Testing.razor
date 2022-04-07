@@ -1,0 +1,64 @@
+﻿@using DataAccessLibrary
+@inject IHamsterData _db
+@page "/test"
+
+
+
+<h3>Testing</h3>
+
+@if (hamstersList is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>left</th>
+                <th>right</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach(var he in RandomHamster())
+            {
+                <tr>
+                    <td>@he.Name</td>
+                    <td>@he.ImgName</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+}
+
+
+@code {
+    private List<Hamsters> hamstersList = new List<Hamsters>();
+    protected override async Task OnInitializedAsync()
+    {
+        hamstersList = await _db.GetHamsters();
+    }
+
+    private List<Hamsters> RandomHamster()
+    {
+        List<Hamsters> templist = new List<Hamsters>();
+        for (int i = 0; i < 3; i++)
+        {
+            Random rnd = new Random();
+            int rndId = rnd.Next(1, 40);
+            foreach (Hamsters h in hamstersList)
+            {
+                if (h.Id == rndId)
+                {
+                    i++;
+                    templist.Add(h);
+                }
+            }
+        }
+        return templist;
+
+    }
+   }

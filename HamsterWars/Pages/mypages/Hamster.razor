@@ -1,0 +1,65 @@
+﻿@page "/mypages/Hamster"
+
+@using DataAccessLibrary
+
+
+@inject IHamsterData _db
+
+
+
+
+<h3>Hamster Page</h3>
+
+<h4>Our Hamsters</h4>
+@if (hamsters is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Favorite Food</th>
+                <th>Loves</th>
+                <th></th> @* Visa bilden här*@
+                <th>Wins</th>
+                <th>Defeats</th>
+                <th>Games played</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var hamster in hamsters)
+            {
+                <tr>
+                    <td>@hamster.Name</td>
+                    <td>@hamster.Age</td>
+                    <td>@hamster.FavFood</td>
+                    <td>@hamster.Loves</td>
+                    <td>
+                        <a href="~/Content/Photos/@hamster.ImgName">Picture</a>
+                    </td> 
+                    <td>@hamster.Wins</td>
+                    <td>@hamster.Defeats</td>
+                    <td>@hamster.Games</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+
+
+
+@code {
+    private List<Hamsters> hamsters = new List<Hamsters>();
+    protected override async Task OnInitializedAsync()
+    {
+        hamsters = await _db.GetHamsters();
+    }
+}
+
