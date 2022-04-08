@@ -20,7 +20,7 @@ else
                 <div class="col-xs-12 col-sm-6 col-no-padding ">
                     <a href="#"><img class="thumbnail img-responsive " src="/Content/Photos/@hamster.ImgName"></a>
                     <h4>Wins = @hamster.Wins</h4>
-                    <button type="button" @onclick="(() => Like(1,hamster.Id))" class="btn btn-info">Like</button>
+                    <button type="button" @onclick="(() => InsertLike(hamster))" class="btn btn-info">Like</button>
                 </div>
             </div>
         }
@@ -54,7 +54,11 @@ else
         }
         return templist;
     }
-    private async Task InsertLike() => await _db.InsertLikes()
-
+    private async Task InsertLike(Hamsters hamster)
+    {
+        hamster.Wins++;
+        hamster.Games++;
+        await _db.InsertLikes(hamster);
+    }
 
 }

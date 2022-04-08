@@ -12,16 +12,19 @@ namespace DataAccessLibrary
 
         public HamsterData(ISqlDataAccess db)
         {
-           this._db = db;
+            this._db = db;
         }
         public Task<List<Hamsters>> GetHamsters()
         {
             string sql = "select * from dbo.Hamsters";
             return _db.LoadData<Hamsters, dynamic>(sql, new { });
         }
-       public Task InsertLikes(Hamsters hamsters)
+        public Task InsertLikes(Hamsters hamsters)
         {
-            string sql = $"update Hamsters set Wins = Wins+1 where id =1";
+            string sql = @"UPDATE dbo.Hamsters set Wins = @Wins, Name = @Name, Age = @Age, FavFood = @FavFood, Loves = @Loves, ImgName = @ImgName, Defeats = @Defeats, Games = @Games WHERE ID = @Id ";
+
+
+
             return _db.Savedata(sql, hamsters);
         }
 
