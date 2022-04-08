@@ -20,13 +20,16 @@ else
             </tr>
         </thead>
         <tbody>
-
-            @foreach(var he in RandomHamster())
+            @foreach (var he in RandomHamster())
             {
-                <tr>
-                    <td>@he.Name</td>
-                    <td>@he.ImgName</td>
-                </tr>
+            <tr>
+                <h4> @he.Name<br></h4>
+                <img src="/Content/Photos/@he.ImgName " class="w-50" />
+
+                <button class="btn btn-primary" type="submit">Button</button>
+          
+
+            </tr>
             }
         </tbody>
 
