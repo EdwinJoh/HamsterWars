@@ -5,5 +5,6 @@ namespace DataAccessLibrary
     {
         Task<List<Hamsters>> GetHamsters();
         Task InsertLikes(Hamsters hamsters);
+        Task InsertDefeat(Hamsters hamsters);
     }
 }

@@ -13,20 +13,7 @@
 }
 else
 {
-    <div class="figthers ">
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    @for (int i = 0; i < 2; i++)
-                    {
-                        
-                        <th scope="col" class="text-center"></th>
-                        break;
-                    }
-                </tr>
-            </thead>
-        </table>
-    </div>
+    <Testing></Testing>
 }
 
 
@@ -37,15 +24,8 @@ else
     {
         hamsterList = await _db.GetHamsters();
     }
-    private string RandomHamster()
-    {
-        Random rnd = new Random();
-        int picNr = rnd.Next(1, 40);
-        string nextpick = $"hamster-{picNr}.jpg";
-        return nextpick;
-
 
     }
 }
 
-                       @* <th scope="col" class="text-center"></th>*@
+                   

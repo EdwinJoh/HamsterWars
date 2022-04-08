@@ -23,18 +23,18 @@ else
                 <div class="col-xs-12 col-sm-6 col-no-padding ">
                     <a href="#"><img class="thumbnail img-responsive " src="/Content/Photos/@hamster.ImgName"></a>
                     <h4>Wins = @hamster.Wins</h4>
-                    <button type="button" @onclick="(() => InsertLike(temp,hamster.Name))" class="btn btn-info">Like</button>
+                    <button type="button" @onclick="(() => InsertLike(temp,hamster.Name,hamster))" class="btn btn-info">Like</button>
                 </div>
             </div>
         }
     </div>
+
 }
 
 
 @code
 {
     private List<Hamsters> hamstersList = new List<Hamsters>();
-    public Hamsters Hamsters { get; set; }     
     protected override async Task OnInitializedAsync()
     {
         hamstersList = await _db.GetHamsters();
@@ -58,22 +58,23 @@ else
         }
         return templist;
     }
-    private async Task InsertLike(List<Hamsters> cometitorlist, string name)
+    private async Task InsertLike(List<Hamsters> cometitorlist, string name, Hamsters hamsters) // fixa namn på listan
     {
-        foreach(var i in cometitorlist)
+        foreach (var i in cometitorlist)
         {
-            if  (i.Name == name)
+            if (i.Name == name)
             {
                 i.Wins++;
                 i.Games++;
+                await _db.InsertLikes(i);
             }
             else
             {
                 i.Games++;
                 i.Defeats++;
+                await _db.InsertDefeat(i);
             }
         }
-        await _db.InsertLikes(Hamsters);
     }
 
 }
