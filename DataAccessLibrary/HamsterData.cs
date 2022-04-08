@@ -19,6 +19,12 @@ namespace DataAccessLibrary
             string sql = "select * from dbo.Hamsters";
             return _db.LoadData<Hamsters, dynamic>(sql, new { });
         }
+        public Task<List<Hamsters>> FindWinner() /// stor bokstav ==????
+        {
+            string sql = @"Select name,wins from Hamsters where wins = (select MAX(wins) from Hamsters)";
+            return _db.GetWinner<Hamsters, dynamic>(sql, new { });
+
+        }
         public Task InsertLikes(Hamsters hamsters)
         {
             string sql = @"UPDATE dbo.Hamsters set Wins = @Wins, Name = @Name, Age = @Age, FavFood = @FavFood, Loves = @Loves, ImgName = @ImgName, Defeats = @Defeats, Games = @Games WHERE ID = @Id ";
@@ -27,7 +33,7 @@ namespace DataAccessLibrary
         public Task InsertDefeat(Hamsters hamsters)
         {
             string sql = @"UPDATE dbo.Hamsters set Defeats = @Defeats, Name = @Name, Age = @Age, FavFood = @FavFood, Loves = @Loves, ImgName = @ImgName, Wins = @Wins, Games = @Games WHERE ID = @Id ";
-            return _db.Savedata(sql,hamsters);
+            return _db.Savedata(sql, hamsters);
         }
 
     }

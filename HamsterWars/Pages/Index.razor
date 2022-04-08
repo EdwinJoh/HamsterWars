@@ -6,15 +6,27 @@
 <PageTitle>Index</PageTitle>
 
 <h1>Welcome to HamsterWars</h1>
+@if (hamstersList is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+
+    @*<h3>Our cutest Hamster is @GetCutestHamster()</h3>*@
+}
 
 
 
 
 
-@code{
+@code {
+    
     private List<Hamsters> hamstersList = new List<Hamsters>();
     protected override async Task OnInitializedAsync()
     {
-        hamstersList = await _db.GetHamsters();
+        hamstersList = await _db.FindWinner();
     }
+   
+  
 }
