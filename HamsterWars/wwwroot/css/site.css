@@ -62,3 +62,11 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+    /*vill få bilden i mitten*/
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    
+    
+}

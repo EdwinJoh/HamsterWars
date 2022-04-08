@@ -1,16 +1,18 @@
 ﻿@page "/counter"
 
-<PageTitle>Counter</PageTitle>
+@using DataAccessLibrary
 
-<h1>Counter</h1>
 
-<p role="status">Current count: @currentCount</p>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+<p role="status">Current Wins: @currentCount</p>
+
+@*<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>*@
+<button  class="btn btn-info" @onclick="IncrementCount">Like</button>
 
 @code {
     private int currentCount = 0;
-
+    public int count { get; set; } = 0;
     private void IncrementCount()
     {
         currentCount++;

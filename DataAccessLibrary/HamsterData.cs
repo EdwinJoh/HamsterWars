@@ -19,6 +19,11 @@ namespace DataAccessLibrary
             string sql = "select * from dbo.Hamsters";
             return _db.LoadData<Hamsters, dynamic>(sql, new { });
         }
+       public Task InsertLikes(Hamsters hamsters)
+        {
+            string sql = $"update Hamsters set Wins = Wins+1 where id =1";
+            return _db.Savedata(sql, hamsters);
+        }
 
     }
 }

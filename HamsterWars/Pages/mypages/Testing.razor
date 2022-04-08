@@ -1,10 +1,10 @@
 ﻿@using DataAccessLibrary
 @inject IHamsterData _db
 @page "/test"
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
 
-
-<h3>Testing</h3>
+<h3 class="text-center"> Choose the cutest Hamster</h3>
 
 @if (hamstersList is null)
 {
@@ -12,40 +12,31 @@
 }
 else
 {
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>left</th>
-                <th>right</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var he in RandomHamster())
-            {
-            <tr>
-                <h4> @he.Name<br></h4>
-                <img src="/Content/Photos/@he.ImgName " class="w-50" />
-
-                <button class="btn btn-primary" type="submit">Button</button>
-          
-
-            </tr>
-            }
-        </tbody>
-
-    </table>
-
+    <div class="row row-no-margin center">
+        @foreach (var hamster in RandomHamster())
+        {
+            <div class="col-xs-12 col-sm-6 col-no-padding center">
+                <h1 class="text-center">@hamster.Name</h1>
+                <div class="col-xs-12 col-sm-6 col-no-padding ">
+                    <a href="#"><img class="thumbnail img-responsive " src="/Content/Photos/@hamster.ImgName"></a>
+                    <h4>Wins = @hamster.Wins</h4>
+                    <button type="button" @onclick="(() => Like(1,hamster.Id))" class="btn btn-info">Like</button>
+                </div>
+            </div>
+        }
+    </div>
 }
 
 
-@code {
+@code
+{
     private List<Hamsters> hamstersList = new List<Hamsters>();
     protected override async Task OnInitializedAsync()
     {
         hamstersList = await _db.GetHamsters();
     }
 
-    private List<Hamsters> RandomHamster()
+    private List<Hamsters> RandomHamster() // se till så att samma bild inte kan komma 2 gånger in i listan
     {
         List<Hamsters> templist = new List<Hamsters>();
         for (int i = 0; i < 3; i++)
@@ -62,6 +53,8 @@ else
             }
         }
         return templist;
-
     }
-   }
+    private async Task InsertLike() => await _db.InsertLikes()
+
+
+}
