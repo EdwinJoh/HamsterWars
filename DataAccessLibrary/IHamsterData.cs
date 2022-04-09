@@ -3,9 +3,9 @@ namespace DataAccessLibrary
 {
     public interface IHamsterData
     {
-        Task<List<Hamsters>> GetHamsters();
-        Task<List<Hamsters>> FindWinner();
-        Task InsertLikes(Hamsters hamsters);
-        Task InsertDefeat(Hamsters hamsters);
+        Task<List<HamsterModel>> GetHamsters();
+        Task<List<HamsterModel>> FindWinner();
+        Task InsertLikes(HamsterModel hamsters);
+        Task InsertDefeat(HamsterModel hamsters);
     }
 }

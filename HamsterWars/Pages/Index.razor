@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using DataAccessLibrary
 @inject IHamsterData _db
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
 
 <PageTitle>Index</PageTitle>
@@ -12,21 +13,30 @@
 }
 else
 {
+    <h3>Our cutest Hamster is</h3>
+    @foreach (var hamster in hamstersList)
+    {
 
-    @*<h3>Our cutest Hamster is @GetCutestHamster()</h3>*@
+        <h1>@hamster.Name</h1>
+        <p>Winrate : @hamster.WinRate%</p>
+        <img class="thumbnail img-responsive " src="/Content/Photos/@hamster.ImgName">
+        break;
+      
+    }
 }
 
 
-
-
-
 @code {
-    
-    private List<Hamsters> hamstersList = new List<Hamsters>();
+
+    private List<HamsterModel> hamstersList = new List<HamsterModel>();
     protected override async Task OnInitializedAsync()
     {
         hamstersList = await _db.FindWinner();
+        foreach (var item in hamstersList)
+        {
+            Services.PercentCalculator.ProcentCalculator(item.Games, item.Wins);// kolla vilken hamster som har höst winrate
+        }
     }
-   
-  
+
+
 }

@@ -56,7 +56,7 @@ else
 
 
 @code {
-    private List<Hamsters> hamsters = new List<Hamsters>();
+    private List<HamsterModel> hamsters = new List<HamsterModel>();
     protected override async Task OnInitializedAsync()
     {
         hamsters = await _db.GetHamsters();

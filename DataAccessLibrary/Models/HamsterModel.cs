@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLibrary
 {
-    public class Hamsters
+    public class HamsterModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -17,5 +17,6 @@ namespace DataAccessLibrary
         public int Wins { get; set; }
         public int Defeats { get; set; }
         public int Games { get; set; }
+        public int WinRate { get; set; }
     }
 }
