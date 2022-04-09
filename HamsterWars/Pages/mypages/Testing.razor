@@ -66,13 +66,14 @@ else
             {
                 i.Wins++;
                 i.Games++;
-                i.WinRate = Services.PercentCalculator.ProcentCalculator(i.Games, i.Wins);
+                i.WinRate = Services.PercentCalculator.WinRateCalculator(i.Games, i.Wins);
                 await _db.InsertLikes(i);
             }
             else
             {
                 i.Games++;
                 i.Defeats++;
+                i.LossRate = Services.PercentCalculator.LossRateCalculator(i.Games, i.Defeats);
                 await _db.InsertDefeat(i);
             }
         }

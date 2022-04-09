@@ -27,12 +27,12 @@ namespace DataAccessLibrary
         }
         public Task InsertLikes(HamsterModel hamsters)
         {
-            string sql = @"UPDATE dbo.Hamsters set Wins = @Wins, Name = @Name, Age = @Age, FavFood = @FavFood, Loves = @Loves, ImgName = @ImgName, Defeats = @Defeats, Games = @Games,winRate = @winRate WHERE ID = @Id ";
+            string sql = @"UPDATE dbo.Hamsters set Wins = @Wins, Name = @Name, Age = @Age, FavFood = @FavFood, Loves = @Loves, ImgName = @ImgName, Defeats = @Defeats, Games = @Games, winRate = @winRate, LossRate = @LossRate  WHERE ID = @Id ";
             return _db.Savedata(sql, hamsters);
         }
         public Task InsertDefeat(HamsterModel hamsters)
         {
-            string sql = @"UPDATE dbo.Hamsters set Defeats = @Defeats, Name = @Name, Age = @Age, FavFood = @FavFood, Loves = @Loves, ImgName = @ImgName, Wins = @Wins, Games = @Games,winRate = @winRate WHERE ID = @Id ";
+            string sql = @"UPDATE dbo.Hamsters set Defeats = @Defeats, Name = @Name, Age = @Age, FavFood = @FavFood, Loves = @Loves, ImgName = @ImgName, Wins = @Wins, Games = @Games, winRate = @winRate, LossRate = @LossRate WHERE ID = @Id ";
             return _db.Savedata(sql, hamsters);
         }
 

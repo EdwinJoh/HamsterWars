@@ -18,5 +18,6 @@ namespace DataAccessLibrary
         public int Defeats { get; set; }
         public int Games { get; set; }
         public int WinRate { get; set; }
+        public int LossRate { get; set; }
     }
 }

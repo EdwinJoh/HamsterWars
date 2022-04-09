@@ -1,0 +1,74 @@
+﻿@page "/mypages/Statistics"
+@using DataAccessLibrary
+@inject IHamsterData _db
+
+<h3>Statistics</h3>
+
+
+<lable>Sort:</lable>
+<select @bind="SelectedSort">
+    <option value="name">Name</option>
+    <option value="winRate">Win Rate</option>
+</select>
+
+@if (hamsters is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">age</th>
+                <th scope="col">Win Rate</th>
+                <th scope="col">lose Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var hamster in hamsters)
+            {
+                <tr>
+                    <th scope="row">@hamster.Id</th>
+                    <td>@hamster.Name</td>
+                    <td>@hamster.Age</td>
+                    <td>@hamster.WinRate%</td>
+
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}
+
+
+
+
+
+@code {
+    private string selectedSort;
+    public string SelectedSort
+    {
+        get { return selectedSort; }
+        set
+        {
+            selectedSort = value;
+            selectedSortDictionary[selectedSort]();
+        }
+    }
+    Dictionary<string, Action> selectedSortDictionary;
+
+    private List<HamsterModel> hamsters = new List<HamsterModel>();
+    protected override async Task OnInitializedAsync()
+    {
+        hamsters = await _db.GetHamsters();
+        selectedSortDictionary = new Dictionary<string, Action>
+            {
+                ["name"] = () => hamsters = hamsters.OrderByDescending(s => s.Name).ToList(),
+                ["winRate"] = () => hamsters = hamsters.OrderByDescending(s => s.WinRate).ToList(),
+
+            };
+    }
+}
