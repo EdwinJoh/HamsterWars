@@ -13,15 +13,18 @@
 }
 else
 {
-    <h3>Our cutest Hamster is</h3>
+    <h3>Our Winning Hamster</h3>
     @foreach (var hamster in hamstersList)
     {
 
-        <h1>@hamster.Name</h1>
-        <p>Winrate : @hamster.WinRate%</p>
-        <img class="thumbnail img-responsive " src="/Content/Photos/@hamster.ImgName">
+        <img class="w-25 " src="/Content/Photos/@hamster.ImgName">
+        <div>
+            <h4><b>@hamster.Name.ToUpper()</b> <small>Winrate: @hamster.WinRate%</small></h4>
+        </div>
+
+
         break;
-      
+
     }
 }
 
@@ -34,7 +37,8 @@ else
         hamstersList = await _db.FindWinner();
         foreach (var item in hamstersList)
         {
-            Services.PercentCalculator.ProcentCalculator(item.Games, item.Wins);// kolla vilken hamster som har höst winrate
+            int maxvalue = hamstersList.Max(r => r.WinRate);
+            //Services.PercentCalculator.ProcentCalculator(item.Games, item.Wins);// kolla vilken hamster som har höst winrate
         }
     }
 

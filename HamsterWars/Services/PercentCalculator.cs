@@ -8,11 +8,19 @@ namespace HamsterWars.Services
 {
     public class PercentCalculator
     {
-        public static int ProcentCalculator(int games,int wins)
+        public static int ProcentCalculator(int games, int wins)
         {
-            decimal number = (decimal)wins/(decimal)games;
-            number = Math.Round(number*100);
-            return (int)number;
+            if (games == 0)
+            {
+                return 0;
+            }
+            else
+            {
+
+                decimal number = (decimal)wins / (decimal)games;
+                number = Math.Round(number * 100);
+                return (int)number;
+            }
         }
     }
 }
