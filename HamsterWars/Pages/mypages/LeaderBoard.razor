@@ -1,40 +1,47 @@
 ﻿@page "/mypages/Leaderboard"
 @using DataAccessLibrary
+@using HamsterWars.Services
 @inject IHamsterData _db
 
 <h3>LeaderBoard</h3>
+<h3>Top 10 hamsters</h3>
 
-@if (hamsters is null)
+@if (topWinners is null)
 {
-  <p><em>Loading ...</em></p>  
-}else{
-<table class="table">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Win rate</th>
-            <th scope="col">Games</th>
-            <th scope="col">Defeats</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in hamsters)
-        {
-            
-        }
-    </tbody>
-</table>
+    <p><em>Loading ...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Win rate</th>
+                <th scope="col">Games</th>
+                <th scope="col">Defeats</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var hamster in topWinners)
+            {
+                <tr>
+                    <th scope="row">@hamster.Name</th>
+                    <th>@PercentCalculator.WinRateCalculator(@hamster.Wins,@hamster.Games)%</th>
+                    <th>@hamster.Games</th>
+                    <th>@hamster.Defeats</th>
+                </tr>
+            }
+        </tbody>
+    </table>
 
 
 }
 @code {
-    private List<HamsterModel> hamsters = new List<HamsterModel>();
+
+    List<HamsterModel> topWinners = new List<HamsterModel>();
     protected override async Task OnInitializedAsync()
     {
-        hamsters = await _db.GetHamsters();
+        topWinners = await _db.TopTenWinners();
     }
-    private List<HamsterModel> GetTopTen()
-    {
-        
-    }
+
 }

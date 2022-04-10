@@ -8,7 +8,7 @@ namespace HamsterWars.Services
 {
     public class PercentCalculator
     {
-        public static int WinRateCalculator(int games, int wins)
+        public static int WinRateCalculator(int wins, int games)
         {
             if (games == 0)
             {
@@ -16,7 +16,6 @@ namespace HamsterWars.Services
             }
             else
             {
-
                 decimal number = (decimal)wins / (decimal)games;
                 number = Math.Round(number * 100);
                 return (int)number;
@@ -31,7 +30,7 @@ namespace HamsterWars.Services
             else
             {
                 decimal number = (decimal)defeats / (decimal)games;
-                number = Math.Round(number* 100);
+                number = Math.Round(number * 100);
                 return (int)number;
             }
         }

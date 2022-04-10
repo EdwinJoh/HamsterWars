@@ -1,14 +1,16 @@
 ﻿@page "/mypages/Statistics"
 @using DataAccessLibrary
 @inject IHamsterData _db
-
+@using HamsterWars.Services
 <h3>Statistics</h3>
 
 
 <lable>Sort:</lable>
 <select @bind="SelectedSort">
-    <option value="name">Name</option>
-    <option value="winRate">Win Rate</option>
+    <option value="name desc">Name desc</option>
+    <option value="wins desc">Wins desc</option>
+    <option value="name asc">Name asc</option>
+    <option value="wins asc">Wins asc</option>
 </select>
 
 @if (hamsters is null)
@@ -20,31 +22,25 @@ else
     <table class="table">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">age</th>
-                <th scope="col">Win Rate</th>
-                <th scope="col">lose Rate</th>
+                <th scope="col">Wins</th>
+                <th scope="col">Win rate</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var hamster in hamsters)
             {
                 <tr>
-                    <th scope="row">@hamster.Id</th>
                     <td>@hamster.Name</td>
                     <td>@hamster.Age</td>
-                    <td>@hamster.WinRate%</td>
-
+                    <td>@hamster.Wins</td>
+                    <td>@PercentCalculator.WinRateCalculator(@hamster.Wins,@hamster.Games)%</td>
                 </tr>
-
             }
         </tbody>
     </table>
 }
-
-
-
 
 
 @code {
@@ -66,8 +62,10 @@ else
         hamsters = await _db.GetHamsters();
         selectedSortDictionary = new Dictionary<string, Action>
             {
-                ["name"] = () => hamsters = hamsters.OrderByDescending(s => s.Name).ToList(),
-                ["winRate"] = () => hamsters = hamsters.OrderByDescending(s => s.WinRate).ToList(),
+                ["name desc"] = () => hamsters = hamsters.OrderByDescending(s => s.Name).ToList(),
+                ["name asc"] = () => hamsters = hamsters.OrderBy(s => s.Name).ToList(),
+                ["wins desc"] = () => hamsters = hamsters.OrderByDescending(s => s.Wins).ToList(),
+                ["wins asc"] = () => hamsters = hamsters.OrderBy(s => s.Wins).ToList(),
 
             };
     }

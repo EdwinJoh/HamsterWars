@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using DataAccessLibrary
+@using HamsterWars.Services
 @inject IHamsterData _db
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
@@ -19,12 +20,10 @@ else
 
         <img class="w-25 " src="/Content/Photos/@hamster.ImgName">
         <div>
-            <h4><b>@hamster.Name.ToUpper()</b> <small>Winrate: @hamster.WinRate%</small></h4>
+            <h4><b>@hamster.Name.ToUpper()</b> <small>Winrate: @PercentCalculator.WinRateCalculator(@hamster.Wins,@hamster.Games)%</small></h4>
         </div>
-
-
         break;
-
+        // visa 2 hamstrar om de är draw ? 
     }
 }
 
@@ -37,10 +36,8 @@ else
         hamstersList = await _db.FindWinner();
         foreach (var item in hamstersList)
         {
-            int maxvalue = hamstersList.Max(r => r.WinRate);
-            //Services.PercentCalculator.ProcentCalculator(item.Games, item.Wins);// kolla vilken hamster som har höst winrate
+            int maxvalue = hamstersList.Max(r => r.Wins);
         }
     }
-
 
 }
