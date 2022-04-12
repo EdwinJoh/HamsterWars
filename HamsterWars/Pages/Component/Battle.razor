@@ -1,6 +1,6 @@
 ﻿@using DataAccessLibrary
 @inject IHamsterData _db
-@page "/test"
+@page "/battle"
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
 
@@ -15,17 +15,19 @@ else
     <div class="row row-no-margin center">
         @{
             var temp = RandomHamster();
-        }
-        @foreach (var hamster in temp)
-        {
-            <div class="col-xs-12 col-sm-6 col-no-padding center">
-                <h1 class="text-center">@hamster.Name</h1>
-                <div class="col-xs-12 col-sm-6 col-no-padding ">
-                    <img class="thumbnail img-responsive " src="/Content/Photos/@hamster.ImgName">
-                    <h4>Wins = @hamster.Wins</h4>
-                    <button type="button" @onclick="(() => InsertLike(temp,hamster.Name,hamster))" class="btn btn-info">Like</button>
+            @foreach (var hamster in temp)
+            {
+                <div class="col-xs-12 col-sm-6 col-no-padding center">
+                    <div class="col-xs-12 col-sm-6 col-no-padding ">
+                        <img class="img-thumbnail" src="/Content/Photos/@hamster.ImgName">
+                        <p class="text-center">@hamster.Name</p>
+                        <p class="text-left">Age:&nbsp;@hamster.Age</p>
+                        <p class="text-left">Favorite food:&nbsp;@hamster.FavFood</p>
+                        <p class="text-left">Favorite activity:&nbsp;@hamster.Loves</p>
+                        <button type="button" @onclick="(() => InsertLike(temp,hamster.Name,hamster))" class="btn btn-info">Like</button>
+                    </div>
                 </div>
-            </div>
+            }
         }
     </div>
 

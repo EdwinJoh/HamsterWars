@@ -1,43 +1,39 @@
 ﻿@page "/"
 @using DataAccessLibrary
 @using HamsterWars.Services
+@inject NavigationManager _nav
 @inject IHamsterData _db
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
-
 <PageTitle>Index</PageTitle>
-
-<h1>Welcome to HamsterWars</h1>
-@if (hamstersList is null)
+@if (hamsters is null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <h3>Our Winning Hamster</h3>
-    @foreach (var hamster in hamstersList)
-    {
-
-        <img class="w-25 " src="/Content/Photos/@hamster.ImgName">
+    <h1>Welcome to Hamster Wars!</h1>
+    <div>@*give class and name*@
         <div>
-            <h4><b>@hamster.Name.ToUpper()</b> <small>Winrate: @PercentCalculator.WinRateCalculator(@hamster.Wins,@hamster.Games)%</small></h4>
+            <p1>
+                When you visit the battle site you are meet with two picture's
+                of Two diffrent hamsters. <br />Your objectiv is to choose the cutest hamster out of the two hamsters
+            </p1>
         </div>
-        break;
-        // visa 2 hamstrar om de är draw ? 
-    }
+        <br />
+        <button type="button" @onclick="@(()=>_nav.NavigateTo("/battle"))" class="btn btn-danger">Battle</button>
+        <button type="button" @onclick="@(()=>_nav.NavigateTo("/gallery"))" class="btn btn-danger">Gallery</button>
+    </div>
+
 }
 
-
 @code {
-
-    private List<HamsterModel> hamstersList = new List<HamsterModel>();
+    private List<HamsterModel> hamsters = new List<HamsterModel>();
     protected override async Task OnInitializedAsync()
     {
-        hamstersList = await _db.FindWinner();
-        foreach (var item in hamstersList)
-        {
-            int maxvalue = hamstersList.Max(r => r.Wins);
-        }
+        hamsters = await _db.GetHamsters();
     }
+
 
 }

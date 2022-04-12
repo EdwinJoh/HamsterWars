@@ -1,0 +1,39 @@
+﻿@page "/gallery"
+@using DataAccessLibrary
+@inject IHamsterData _db
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+
+<h4>Our Hamsters</h4>
+@if (hamsters is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @foreach (var hamster in hamsters)
+    {
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="/Content/Photos/@hamster.ImgName" alt="Avatar" style="width:300px;height:300px;">
+                </div>
+                <div class="flip-card-back">
+                    <h1>@hamster.Name</h1>
+                    <p>Age:@hamster.Age</p>
+                    <p>Favorite Food:@hamster.FavFood</p>
+                    <p>Favorite Activity:@hamster.Loves</p>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@code {
+    private List<HamsterModel> hamsters = new List<HamsterModel>();
+    protected override async Task OnInitializedAsync()
+    {
+        hamsters = await _db.GetHamsters();
+    }
+    }
+

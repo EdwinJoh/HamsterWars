@@ -1,8 +1,3 @@
-//using HamsterWars.Data;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using DataAccessLibrary;
 
 var builder = WebApplication.CreateBuilder(args);
