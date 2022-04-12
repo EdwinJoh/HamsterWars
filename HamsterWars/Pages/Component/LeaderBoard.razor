@@ -41,7 +41,7 @@ else
     List<HamsterModel> topWinners = new List<HamsterModel>();
     protected override async Task OnInitializedAsync()
     {
-        topWinners = await _db.TopTenWinners();
+        topWinners = await _db.Topfive();
     }
 
 }

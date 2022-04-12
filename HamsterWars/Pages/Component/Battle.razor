@@ -1,4 +1,5 @@
 ﻿@using DataAccessLibrary
+@using Services
 @inject IHamsterData _db
 @page "/battle"
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -6,74 +7,54 @@
 
 <h3 class="text-center"> Choose the cutest Hamster</h3>
 
-@if (hamstersList is null)
+@if (hamsters is null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <div class="row row-no-margin center">
-        @{
-            var temp = RandomHamster();
-            @foreach (var hamster in temp)
-            {
-                <div class="col-xs-12 col-sm-6 col-no-padding center">
-                    <div class="col-xs-12 col-sm-6 col-no-padding ">
-                        <img class="img-thumbnail" src="/Content/Photos/@hamster.ImgName">
-                        <p class="text-center">@hamster.Name</p>
-                        <p class="text-left">Age:&nbsp;@hamster.Age</p>
-                        <p class="text-left">Favorite food:&nbsp;@hamster.FavFood</p>
-                        <p class="text-left">Favorite activity:&nbsp;@hamster.Loves</p>
-                        <button type="button" @onclick="(() => InsertLike(temp,hamster.Name,hamster))" class="btn btn-info">Like</button>
-                    </div>
-                </div>
-            }
-        }
+
+        <div style="float:left;">
+        <img class="img-thumbnail" src="/Content/Photos/@hamster1.ImgName">
+        <p class="text-center">@hamster1.Name</p>
+        <p class="text-left">Age:&nbsp;@hamster1.Age</p>
+        <p class="text-left">Favorite food:&nbsp;@hamster1.FavFood</p>
+        <p class="text-left">Favorite activity:&nbsp;@hamster1.Loves</p>
+    </div>
+    <div style="float:right;">
+        <img class="img-thumbnail" src="/Content/Photos/@hamster2.ImgName">
+        <p class="text-center">@hamster2.Name</p>
+        <p class="text-left">Age:&nbsp;@hamster2.Age</p>
+        <p class="text-left">Favorite food:&nbsp;@hamster2.FavFood</p>
+        <p class="text-left">Favorite activity:&nbsp;@hamster2.Loves</p>
     </div>
 
 }
 
-
 @code
 {
-    private List<HamsterModel> hamstersList = new List<HamsterModel>();
+    private List<HamsterModel>? hamsters;
+    private HamsterModel? hamster1;
+    private HamsterModel? hamster2;
     protected override async Task OnInitializedAsync()
     {
-        hamstersList = await _db.GetHamsters();
+        hamsters = await _db.GetHamsters();
+        (hamster1, hamster2) = Randomizer.Gethamster(hamsters);
     }
 
-    private List<HamsterModel> RandomHamster() // se till så att samma bild inte kan komma 2 gånger in i listan
-    {
-        List<HamsterModel> templist = new List<HamsterModel>();
-        for (int i = 0; i < 3; i++)
-        {
-            Random rnd = new Random();
-            int rndId = rnd.Next(1, 40);
-            foreach (HamsterModel h in hamstersList)
-            {
-                if (h.Id == rndId)
-                {
-                    i++;
-                    templist.Add(h);
-                }
-            }
-        }
-        return templist;
-    }
-    private async Task InsertLike(List<HamsterModel> cometitorlist, string name, HamsterModel hamsters) // fixa namn på listan
+
+
+    private async Task InsertLike(List<HamsterModel> cometitorlist, string winnerName, HamsterModel hamsters) // fixa namn på listan
     {
         foreach (var i in cometitorlist)
         {
-            if (i.Name == name)
+            if (i.Name == winnerName)
             {
-                i.Wins++;
-                i.Games++;
+
                 await _db.InsertLikes(i);
             }
             else
             {
-                i.Games++;
-                i.Defeats++;
                 await _db.InsertDefeat(i);
             }
         }

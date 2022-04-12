@@ -1,6 +1,8 @@
 ﻿@page "/gallery"
 @using DataAccessLibrary
 @inject IHamsterData _db
+@inject NavigationManager _nav
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
 
@@ -11,18 +13,21 @@
 }
 else
 {
+    <div class="jasd"></div>
+    <button  @onclick="@(()=>_nav.NavigateTo("/addHamster"))" type="button" class="btn btn-primary">Add Hamster</button>
     @foreach (var hamster in hamsters)
     {
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
-                    <img src="/Content/Photos/@hamster.ImgName" alt="Avatar" style="width:300px;height:300px;">
+                    <img src="/Content/Photos/@hamster.ImgName" onerror="this.onerror=null; this.src='/Content/Photos/hamster.jpg.jpg'" alt="" style="width:300px;height:300px;">
                 </div>
                 <div class="flip-card-back">
                     <h1>@hamster.Name</h1>
                     <p>Age:@hamster.Age</p>
                     <p>Favorite Food:@hamster.FavFood</p>
                     <p>Favorite Activity:@hamster.Loves</p>
+                    <button type="button" @onclick="(() => RemoveHamster(hamster))" class="btn btn-danger">REMOVE</button>
                 </div>
             </div>
         </div>
@@ -35,5 +40,12 @@ else
     {
         hamsters = await _db.GetHamsters();
     }
+   
+    private async Task RemoveHamster(HamsterModel hamster)
+    {
+        await _db.RemoveHamster(hamster);
+
+    }
+
     }
 

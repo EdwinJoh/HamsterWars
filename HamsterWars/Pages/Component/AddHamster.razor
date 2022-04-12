@@ -1,0 +1,45 @@
+﻿<h3>AddHamster</h3>
+@page "/addHamster"
+@using DataAccessLibrary
+@inject IHamsterData _db
+
+
+
+<EditForm Model="@newHamster" OnValidSubmit="@InsertNewHamster">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText placeholder="Name" id="Name" @bind-Value="@newHamster.Name" />
+    <InputNumber placeholder="Age" id="Age" @bind-Value="@newHamster.Age" />
+    <InputText placeholder="Favorite Food" id="FavFood" @bind-Value="@newHamster.FavFood" />
+    <InputText placeholder="Favorite activity" id="Loves" @bind-Value="@newHamster.Loves" />
+    <InputText placeholder="Image name" id="ImgName" @bind-Value="@newHamster.ImgName" />
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+
+
+@code {
+    private HamsterModel newHamster = new HamsterModel();
+    private List<HamsterModel> hamstersList = new List<HamsterModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        hamstersList = await _db.GetHamsters();
+    }
+    private async Task InsertNewHamster()
+    {
+        HamsterModel hamster = new HamsterModel
+            {
+                Name = newHamster.Name,
+                Age = newHamster.Age,
+                FavFood = newHamster.FavFood,
+                Loves = newHamster.Loves,
+                ImgName = newHamster.ImgName,
+            };
+        await _db.InsertHamster(hamster);
+        hamstersList.Add(hamster);
+    }
+
+
+}
