@@ -13,22 +13,49 @@
 }
 else
 {
+    <div class="row">
+        <div class="column" style="float: left">
+            <div style="float: left;">
+                <img class="img-thumbnail" src="/Content/Photos/@hamster1.ImgName">
+                <p class="text-center">@hamster1.Name</p>
+                <p class="text-left">Age:&nbsp;@hamster1.Age</p>
+                <p class="text-left">Favorite food:&nbsp;@hamster1.FavFood</p>
+                <p class="text-left">Favorite activity:&nbsp;@hamster1.Loves</p>
+                @if (result)
+                {
+                    <p>Wins: @hamster1.Wins Defeats: @hamster1.Defeats</p>
+                }
+                else
+                {
+                    <button type="button" @onclick="(() => BattleResult(hamster1,hamster2))" class="btn btn-primary">Like</button>
+                }
+            </div>
+        </div>
+        <div class="column">
+            @if (result)
+            {
+                <button type="button" class="btn btn-primary" onfocus="location.reload()">Next battle</button>
+            }
+        </div>
+        <div class="column" style="float: right">
+            <div style="float: right;">
+                <img class="img-thumbnail" src="/Content/Photos/@hamster2.ImgName">
+                <p class="text-center">@hamster2.Name</p>
+                <p class="text-left">Age:&nbsp;@hamster2.Age</p>
+                <p class="text-left">Favorite food:&nbsp;@hamster2.FavFood</p>
+                <p class="text-left">Favorite activity:&nbsp;@hamster2.Loves</p>
+                @if (result)
+                {
+                    <p>Wins: @hamster2.Wins Defeats: @hamster2.Defeats</p>
 
-        <div style="float:left;">
-        <img class="img-thumbnail" src="/Content/Photos/@hamster1.ImgName">
-        <p class="text-center">@hamster1.Name</p>
-        <p class="text-left">Age:&nbsp;@hamster1.Age</p>
-        <p class="text-left">Favorite food:&nbsp;@hamster1.FavFood</p>
-        <p class="text-left">Favorite activity:&nbsp;@hamster1.Loves</p>
+                }
+                else
+                {
+                    <button type="button" @onclick="(() => BattleResult(hamster2,hamster1))" class="btn btn-primary">Like</button>
+                }
+            </div>
+        </div>
     </div>
-    <div style="float:right;">
-        <img class="img-thumbnail" src="/Content/Photos/@hamster2.ImgName">
-        <p class="text-center">@hamster2.Name</p>
-        <p class="text-left">Age:&nbsp;@hamster2.Age</p>
-        <p class="text-left">Favorite food:&nbsp;@hamster2.FavFood</p>
-        <p class="text-left">Favorite activity:&nbsp;@hamster2.Loves</p>
-    </div>
-
 }
 
 @code
@@ -36,28 +63,21 @@ else
     private List<HamsterModel>? hamsters;
     private HamsterModel? hamster1;
     private HamsterModel? hamster2;
+    private bool result = false;
     protected override async Task OnInitializedAsync()
     {
         hamsters = await _db.GetHamsters();
         (hamster1, hamster2) = Randomizer.Gethamster(hamsters);
     }
 
-
-
-    private async Task InsertLike(List<HamsterModel> cometitorlist, string winnerName, HamsterModel hamsters) // fixa namn på listan
+    private async Task BattleResult(HamsterModel? winner, HamsterModel? loser) // fixa namn på listan
     {
-        foreach (var i in cometitorlist)
-        {
-            if (i.Name == winnerName)
-            {
 
-                await _db.InsertLikes(i);
-            }
-            else
-            {
-                await _db.InsertDefeat(i);
-            }
-        }
+        await _db.InsertLikes(winner);
+        await _db.InsertDefeat(loser);
+        winner.Wins++;
+        loser.Defeats++;
+        result = true;
     }
 
 }
