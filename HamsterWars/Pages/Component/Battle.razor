@@ -1,6 +1,9 @@
 ﻿@using DataAccessLibrary
+@using DataAccessLibrary.Models
 @using Services
 @inject IHamsterData _db
+@inject IResultData _bd
+
 @page "/battle"
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
@@ -36,6 +39,10 @@ else
             {
                 <button type="button" class="btn btn-primary" onfocus="location.reload()">Next battle</button>
             }
+            else
+            {
+                <br /> <h1 class="text-center">VS</h1>
+            }
         </div>
         <div class="column" style="float: right">
             <div style="float: right;">
@@ -61,12 +68,18 @@ else
 @code
 {
     private List<HamsterModel>? hamsters;
+       
     private HamsterModel? hamster1;
     private HamsterModel? hamster2;
+    private ResultModel Result = new ResultModel();
     private bool result = false;
     protected override async Task OnInitializedAsync()
     {
-        hamsters = await _db.GetHamsters();
+        if (hamsters is null)
+        {
+            hamsters = await _db.GetHamsters();
+
+        }
         (hamster1, hamster2) = Randomizer.Gethamster(hamsters);
     }
 
@@ -75,6 +88,9 @@ else
 
         await _db.InsertLikes(winner);
         await _db.InsertDefeat(loser);
+        Result.WinnerId = winner.Id;
+        Result.LoserId = loser.Id;
+        await _bd.InsertBattle(Result);
         winner.Wins++;
         loser.Defeats++;
         result = true;

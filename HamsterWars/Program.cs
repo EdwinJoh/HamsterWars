@@ -7,6 +7,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddTransient<IHamsterData, HamsterData>();
+builder.Services.AddTransient<IResultData, ResultData>();
 
 var app = builder.Build();
 
