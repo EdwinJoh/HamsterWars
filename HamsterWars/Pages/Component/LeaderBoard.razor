@@ -3,15 +3,13 @@
 @using HamsterWars.Services
 @inject IHamsterData _db
 
-<h3>LeaderBoard</h3>
-<h3>Top 10 hamsters</h3>
-
-@if (topWinners is null)
+@if (hamsters is null)
 {
     <p><em>Loading ...</em></p>
 }
 else
 {
+    <h3>Top 5 Winners</h3>
     <table class="table">
         <thead class="thead-dark">
             <tr>
@@ -22,13 +20,29 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var hamster in topWinners)
+            @foreach (var hamster in TopFiveWinners)
             {
                 <tr>
                     <th scope="row">@hamster.Name</th>
-                    <th>@PercentCalculator.WinRateCalculator(@hamster.Wins,@hamster.Games)%</th>
+                    <th scope="row">@hamster.Wins</th>
+                    @*<th>@PercentCalculator.WinRateCalculator(@hamster.Wins,@hamster.Games)%</th>*@
                     <th>@hamster.Games</th>
                     <th>@hamster.Defeats</th>
+                </tr>
+            }
+        </tbody>
+        <br />
+
+        <tbody>
+            <h3>Top 5 Loser</h3>
+            @foreach (var loser in TopFiveLooser)
+            {
+                <tr>
+                    <th scope="row">@loser.Name</th>
+                    <th scope="row">@loser.Wins</th>
+                    @*<th>@PercentCalculator.WinRateCalculator(@loser.Wins,@loser.Games)%</th>*@
+                    <th>@loser.Games</th>
+                    <th>@loser.Defeats</th>
                 </tr>
             }
         </tbody>
@@ -38,10 +52,19 @@ else
 }
 @code {
 
-    List<HamsterModel> topWinners = new List<HamsterModel>();
+    List<HamsterModel> hamsters = new List<HamsterModel>();
+    List<HamsterModel> TopFiveWinners = new List<HamsterModel>();
+    List<HamsterModel> TopFiveLooser = new List<HamsterModel>();
     protected override async Task OnInitializedAsync()
     {
-        topWinners = await _db.Topfive();
+        //topWinners = await _db.Topfive();
+        hamsters = await _db.GetHamsters();
+        TopFiveWinners = hamsters.OrderByDescending(x => x.Wins).Take(5).ToList();
+        TopFiveLooser = hamsters.OrderByDescending(x => x.Defeats).Take(5).ToList();
+
+
+
     }
+
 
 }
