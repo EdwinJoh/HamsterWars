@@ -1,6 +1,8 @@
 ﻿<h3>AddHamster</h3>
 @page "/addHamster"
 @using DataAccessLibrary
+@using HamsterWars.Models
+@inject NavigationManager _nav
 @inject IHamsterData _db
 
 
@@ -14,13 +16,13 @@
     <InputText placeholder="Favorite Food" id="FavFood" @bind-Value="@newHamster.FavFood" />
     <InputText placeholder="Favorite activity" id="Loves" @bind-Value="@newHamster.Loves" />
     <InputText placeholder="Image name" id="ImgName" @bind-Value="@newHamster.ImgName" />
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" >Submit</button>
 </EditForm>
 
 
 
 @code {
-    private HamsterModel newHamster = new HamsterModel();
+    private DisplayHamsterModel newHamster = new DisplayHamsterModel();
     private List<HamsterModel> hamstersList = new List<HamsterModel>();
 
     protected override async Task OnInitializedAsync()
@@ -39,6 +41,7 @@
             };
         await _db.InsertHamster(hamster);
         hamstersList.Add(hamster);
+        _nav.NavigateTo("/gallery");
     }
 
 

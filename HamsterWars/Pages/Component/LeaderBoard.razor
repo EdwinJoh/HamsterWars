@@ -1,70 +1,72 @@
-﻿@page "/mypages/Leaderboard"
+﻿@page "/leaderboard"
 @using DataAccessLibrary
-@using HamsterWars.Services
 @inject IHamsterData _db
+@using HamsterWars.Services
+<h3>Statistics</h3>
+
+
+<lable>Sort:</lable>
+<select @bind="SelectedSort">
+    <option value="name desc">Name desc</option>
+    <option value="wins desc">Wins desc</option>
+    <option value="name asc">Name asc</option>
+    <option value="wins asc">Wins asc</option>
+</select>
 
 @if (hamsters is null)
 {
-    <p><em>Loading ...</em></p>
+    <p><em>Loading...</em></p>
 }
 else
 {
-    <h3>Top 5 Winners</h3>
     <table class="table">
         <thead class="thead-dark">
             <tr>
                 <th scope="col">Name</th>
+                <th scope="col">age</th>
+                <th scope="col">Wins</th>
                 <th scope="col">Win rate</th>
-                <th scope="col">Games</th>
-                <th scope="col">Defeats</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var hamster in TopFiveWinners)
+            @foreach (var hamster in hamsters)
             {
                 <tr>
-                    <th scope="row">@hamster.Name</th>
-                    <th scope="row">@hamster.Wins</th>
-                    @*<th>@PercentCalculator.WinRateCalculator(@hamster.Wins,@hamster.Games)%</th>*@
-                    <th>@hamster.Games</th>
-                    <th>@hamster.Defeats</th>
-                </tr>
-            }
-        </tbody>
-        <br />
-
-        <tbody>
-            <h3>Top 5 Loser</h3>
-            @foreach (var loser in TopFiveLooser)
-            {
-                <tr>
-                    <th scope="row">@loser.Name</th>
-                    <th scope="row">@loser.Wins</th>
-                    @*<th>@PercentCalculator.WinRateCalculator(@loser.Wins,@loser.Games)%</th>*@
-                    <th>@loser.Games</th>
-                    <th>@loser.Defeats</th>
+                    <td>@hamster.Name</td>
+                    <td>@hamster.Age</td>
+                    <td>@hamster.Wins</td>
+                    <td>@PercentCalculator.WinRateCalculator(@hamster.Wins,@hamster.Games)%</td>
                 </tr>
             }
         </tbody>
     </table>
-
-
 }
-@code {
 
-    List<HamsterModel> hamsters = new List<HamsterModel>();
-    List<HamsterModel> TopFiveWinners = new List<HamsterModel>();
-    List<HamsterModel> TopFiveLooser = new List<HamsterModel>();
+
+@code {
+    private string selectedSort;
+    public string SelectedSort
+    {
+        get { return selectedSort; }
+        set
+        {
+            selectedSort = value;
+            selectedSortDictionary[selectedSort]();
+        }
+    }
+    Dictionary<string, Action> selectedSortDictionary;
+
+    private List<HamsterModel> hamsters = new List<HamsterModel>();
     protected override async Task OnInitializedAsync()
     {
-        //topWinners = await _db.Topfive();
         hamsters = await _db.GetHamsters();
-        TopFiveWinners = hamsters.OrderByDescending(x => x.Wins).Take(5).ToList();
-        TopFiveLooser = hamsters.OrderByDescending(x => x.Defeats).Take(5).ToList();
+        selectedSortDictionary = new Dictionary<string, Action>
+            {
+                ["name desc"] = () => hamsters = hamsters.OrderByDescending(s => s.Name).ToList(),
+                ["name asc"] = () => hamsters = hamsters.OrderBy(s => s.Name).ToList(),
+                ["wins desc"] = () => hamsters = hamsters.OrderByDescending(s => s.Wins).ToList(),
+                ["wins asc"] = () => hamsters = hamsters.OrderBy(s => s.Wins).ToList(),
 
-
-
+            };
     }
-
-
 }

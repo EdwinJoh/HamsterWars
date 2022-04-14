@@ -19,36 +19,26 @@ namespace DataAccessLibrary
             sql = "select * from dbo.Hamsters";
             return _db.LoadData<HamsterModel, dynamic>(sql, new { });
         }
-        public Task<List<HamsterModel>> FindWinner() 
-        {
-             sql = @"Select * from Hamsters where wins = (select MAX(wins) from Hamsters)";
-            return _db.GetWinner<HamsterModel, dynamic>(sql, new { });
 
-        }
         public Task InsertLikes(HamsterModel hamsters)
         {
-             sql = @"UPDATE dbo.Hamsters set Wins = @Wins +1, Name = @Name, Age = @Age, FavFood = @FavFood, Loves = @Loves, ImgName = @ImgName, Defeats = @Defeats, Games = @Games +1 
+            sql = @"UPDATE dbo.Hamsters set Wins = @Wins +1, Name = @Name, Age = @Age, FavFood = @FavFood, Loves = @Loves, ImgName = @ImgName, Defeats = @Defeats, Games = @Games +1 
                            WHERE ID = @Id ";
             return _db.Savedata(sql, hamsters);
         }
         public Task InsertDefeat(HamsterModel hamsters)
         {
-             sql = @"UPDATE dbo.Hamsters set Defeats = @Defeats + 1, Name = @Name, Age = @Age, FavFood = @FavFood, Loves = @Loves, ImgName = @ImgName, Wins = @Wins, Games = @Games +1
+            sql = @"UPDATE dbo.Hamsters set Defeats = @Defeats + 1, Name = @Name, Age = @Age, FavFood = @FavFood, Loves = @Loves, ImgName = @ImgName, Wins = @Wins, Games = @Games +1
                         WHERE ID = @Id ";
             return _db.Savedata(sql, hamsters);
         }
-        public Task<List<HamsterModel>> Topfive()
-        {
-             sql = @"SELECT TOP 5 * FROM Hamsters ORDER BY Wins desc";
-            
-            return _db.LoadData<HamsterModel, dynamic>(sql, new { });
-        }
+
         public Task InsertHamster(HamsterModel hamster)
         {
-             sql = @"INSERT INTO dbo.Hamsters (Name, Age, FavFood,Loves,ImgName) VALUES (@Name, @Age, @FavFood,@Loves,@ImgName)";
+            sql = @"INSERT INTO dbo.Hamsters (Name, Age, FavFood,Loves,ImgName) VALUES (@Name, @Age, @FavFood,@Loves,@ImgName)";
             return _db.Savedata(sql, hamster);
         }
-        public Task RemoveHamster (HamsterModel hamster)
+        public Task RemoveHamster(HamsterModel hamster)
         {
             sql = $"DELETE FROM dbo.Hamsters WHERE Id = {hamster.Id} ";
             return _db.Savedata(sql, hamster);
