@@ -7,7 +7,7 @@
 
 
 <h3>History</h3>
-<button type="button" class="btn btn-danger float-end">Remove all</button>
+<button type="button" @onclick="RemoveAll" class="btn btn-danger float-end">Remove all</button>
 
 <table class="table table-dark">
     <thead>
@@ -26,7 +26,7 @@
                 <th scope="row">@result.Id</th>
                 <td>@Winner.Name</td>
                 <td>@Loser.Name</td>
-                <td><button id="removeOne" type="button" @onclick="(() => RemoveOne(result))" class="btn btn-danger">Remove Match</button></td>
+                <td><button id="removeOne" type="button" onfocus="location.reload()" @onclick="(() => RemoveOne(result))" class="btn btn-danger">Remove Match</button></td>
             </tr>
         }
     </tbody>
@@ -38,8 +38,8 @@
     List<ResultModel> results = new List<ResultModel>();
     public HamsterModel? Winner { get; set; }
     public HamsterModel? Loser { get; set; }
-  
-    
+
+
     protected override async Task OnInitializedAsync()
     {
         hamsters = await _db.GetHamsters();
@@ -70,7 +70,8 @@
     private async Task RemoveAll()
     {
         await _rb.RemoveAllResults();
-        
+
     }
     }
-}
+
+    //TODO POPUP when removing all

@@ -43,5 +43,10 @@ namespace DataAccessLibrary
             sql = $"DELETE FROM dbo.Hamsters WHERE Id = {hamster.Id} ";
             return _db.Savedata(sql, hamster);
         }
+        public Task GetHamster(int id )
+        {
+            sql = "SELECT * FROM dbo.Hamsters Id = id ";
+            return _db.LoadData<HamsterModel, dynamic>(sql, new { });
+        }
     }
 }
