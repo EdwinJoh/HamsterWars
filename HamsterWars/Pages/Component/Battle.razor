@@ -34,7 +34,7 @@ else
                 }
             </div>
         </div>
-        <div class="column">
+        <div class="column justify-content-center">
             @if (result)
             {
                 <button type="button" class="btn btn-primary" onfocus="location.reload()">Next battle</button>
@@ -68,7 +68,7 @@ else
 @code
 {
     private List<HamsterModel>? hamsters;
-       
+
     private HamsterModel? hamster1;
     private HamsterModel? hamster2;
     private ResultModel Result = new ResultModel();

@@ -25,5 +25,15 @@ namespace DataAccessLibrary
             string sql = $"INSERT INTO dbo.Results( WinnerId,LoserId) VALUES ({battleResult.WinnerId}, {battleResult.LoserId})";
             return _db.Savedata(sql, battleResult);
         }
+        public Task RemoveOneResult(ResultModel result)
+        {
+            string sql = $"DELETE FROM dbo.Results WHERE ID ={result.Id}";
+            return _db.Savedata(sql, result);
+        }
+        public Task RemoveAllResults()
+        {
+            string sql = "DELETE FROM dbo.Results";
+            return _db.Savedata(sql, new {});
+        }
     }
 }

@@ -5,7 +5,9 @@
 @inject IResultData _rb
 
 
+
 <h3>History</h3>
+<button type="button" class="btn btn-danger float-end">Remove all</button>
 
 <table class="table table-dark">
     <thead>
@@ -13,6 +15,7 @@
             <th scope="col">Game</th>
             <th scope="col">Winner</th>
             <th scope="col">Looser</th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
@@ -23,17 +26,20 @@
                 <th scope="row">@result.Id</th>
                 <td>@Winner.Name</td>
                 <td>@Loser.Name</td>
+                <td><button id="removeOne" type="button" @onclick="(() => RemoveOne(result))" class="btn btn-danger">Remove Match</button></td>
             </tr>
         }
     </tbody>
 </table>
 
 @code {
+
     List<HamsterModel> hamsters = new List<HamsterModel>();
     List<ResultModel> results = new List<ResultModel>();
     public HamsterModel? Winner { get; set; }
     public HamsterModel? Loser { get; set; }
-
+  
+    
     protected override async Task OnInitializedAsync()
     {
         hamsters = await _db.GetHamsters();
@@ -56,5 +62,15 @@
                 }
             }
         }
+    }
+    private async Task RemoveOne(ResultModel result)
+    {
+        await _rb.RemoveOneResult(result);
+    }
+    private async Task RemoveAll()
+    {
+        await _rb.RemoveAllResults();
+        
+    }
     }
 }
