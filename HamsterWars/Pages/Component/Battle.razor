@@ -67,12 +67,12 @@ else
 
 @code
 {
-    private List<HamsterModel>? hamsterList;
-    private HamsterModel? competitorOne;
-    private HamsterModel? competitorTwo;
-    private ResultModel Result = new ResultModel();
-    private bool battleDone = false;
+    private List<HamsterModel>? hamsters;
 
+    private HamsterModel? hamster1;
+    private HamsterModel? hamster2;
+    private ResultModel Result = new ResultModel();
+    private bool result = false;
     protected override async Task OnInitializedAsync()
     {
         if (hamsterList is null)
@@ -82,15 +82,13 @@ else
         }
         (competitorOne, competitorTwo) = Randomizer.Gethamster(hamsterList);
     }
-    /// <summary>
-    /// Saves The battle to the database when pressing like on either of the hamsters
-    /// </summary>
-    /// <param name="winner">Winner hamster</param>
-    /// <param name="loser">Losing hamster</param>
-       private async Task BattleResult(HamsterModel? winner, HamsterModel? loser) // fixa namn på listan
+
+    private async Task BattleResult(HamsterModel? winner, HamsterModel? loser) // fixa namn på listan
     {
         await _db.InsertLikes(winner);
         await _db.InsertDefeat(loser);
+        Result.WinnerId = winner.Id;
+        Result.LoserId = loser.Id;
         await _bd.InsertBattle(Result);
         battleDone = true;
     }

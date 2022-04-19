@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DataAccessLibrary
 {
+    /// <summary>
+    /// Our Hamster object, Hamstermodel from project description
+    /// </summary>
     public class HamsterModel
     {
         public int Id { get; set; }
