@@ -5,14 +5,6 @@
 <h3>Statistics</h3>
 
 
-<lable>Sort:</lable>
-<select @bind="SelectedSort">
-    <option value="name desc">Name desc</option>
-    <option value="wins desc">Wins desc</option>
-    <option value="name asc">Name asc</option>
-    <option value="wins asc">Wins asc</option>
-</select>
-
 @if (hamsters is null)
 {
     <p><em>Loading...</em></p>
@@ -22,9 +14,9 @@ else
     <table class="table">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">Name</th>
+                <th scope="col" class="sort-link" onclick="@(() => SortTable("Name"))">Name</th>
                 <th scope="col">age</th>
-                <th scope="col">Wins</th>
+                <th scope="col" class="sort-link" onclick="@(() => SortTable("Wins"))">Wins</th>
                 <th scope="col">Win rate</th>
             </tr>
         </thead>
@@ -44,29 +36,38 @@ else
 
 
 @code {
-    private string selectedSort;
-    public string SelectedSort
-    {
-        get { return selectedSort; }
-        set
-        {
-            selectedSort = value;
-            selectedSortDictionary[selectedSort]();
-        }
-    }
-    Dictionary<string, Action> selectedSortDictionary;
 
     private List<HamsterModel> hamsters = new List<HamsterModel>();
+    private bool IsSortedAscending;
+    private string CurrentSortColumn;
+
     protected override async Task OnInitializedAsync()
     {
         hamsters = await _db.GetHamsters();
-        selectedSortDictionary = new Dictionary<string, Action>
-            {
-                ["name desc"] = () => hamsters = hamsters.OrderByDescending(s => s.Name).ToList(),
-                ["name asc"] = () => hamsters = hamsters.OrderBy(s => s.Name).ToList(),
-                ["wins desc"] = () => hamsters = hamsters.OrderByDescending(s => s.Wins).ToList(),
-                ["wins asc"] = () => hamsters = hamsters.OrderBy(s => s.Wins).ToList(),
+    }
 
-            };
+    /// <summary>
+    /// Method for sorting table Sorts on name and Wins
+    /// </summary>
+    private void SortTable(string columnName)
+    {
+        if (columnName != CurrentSortColumn)
+        {
+            hamsters = hamsters.OrderBy(x => x.GetType().GetProperty(columnName).GetValue(x, null)).ToList();
+            CurrentSortColumn = columnName;
+            IsSortedAscending = true;
+        }
+        else
+        {
+            if (IsSortedAscending)
+            {
+                hamsters = hamsters.OrderByDescending(x => x.GetType().GetProperty(columnName).GetValue(x, null)).ToList();
+            }
+            else
+            {
+                hamsters = hamsters.OrderBy(x => x.GetType().GetProperty(columnName).GetValue(x, null)).ToList();
+            }
+            IsSortedAscending = !IsSortedAscending;
+        }
     }
 }

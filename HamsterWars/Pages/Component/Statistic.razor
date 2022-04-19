@@ -15,8 +15,8 @@ else
             <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Wins</th>
-                <th scope="col">Games</th>
                 <th scope="col">Defeats</th>
+                <th scope="col">Games</th>
             </tr>
         </thead>
         <tbody>
@@ -25,12 +25,11 @@ else
                 <tr>
                     <th scope="row">@hamster.Name</th>
                     <th scope="row">@hamster.Wins</th>
-                    <th>@hamster.Games</th>
                     <th>@hamster.Defeats</th>
+                    <th>@hamster.Games</th>
                 </tr>
             }
         </tbody>
-        <br />
 
         <tbody>
             <h3>Top 5 Loser</h3>
@@ -55,14 +54,8 @@ else
     List<HamsterModel> TopFiveLooser = new List<HamsterModel>();
     protected override async Task OnInitializedAsync()
     {
-
         hamsters = await _db.GetHamsters();
         TopFiveWinners = hamsters.OrderByDescending(x => x.Wins).Take(5).ToList();
         TopFiveLooser = hamsters.OrderByDescending(x => x.Defeats).Take(5).ToList();
-
-
-
     }
-
-
 }

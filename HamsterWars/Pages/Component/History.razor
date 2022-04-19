@@ -4,8 +4,6 @@
 @inject IHamsterData _db
 @inject IResultData _rb
 
-
-
 <h3>History</h3>
 <button type="button" @onclick="RemoveAll" class="btn btn-danger float-end">Remove all</button>
 <table class="table table-dark">
@@ -20,7 +18,7 @@
     <tbody>
         @foreach (var result in resultList)
         {
-            test(result.WinnerId, result.LoserId);
+            GetResults(result.WinnerId, result.LoserId);
             <tr>
                 <th scope="row">@result.Id</th>
                 <td>@Winner.Name</td>
@@ -38,27 +36,33 @@
     public HamsterModel? Winner { get; set; }
     public HamsterModel? Loser { get; set; }
 
-
     protected override async Task OnInitializedAsync()
     {
         hamsterList = await _db.GetHamsters();
         resultList = await _rb.Getresult();
     }
-    private void test(int winnerId, int loserId)
+    private void GetResults(int winnerId, int loserId)
     {
-
-        foreach (var result in resultList)
+        if (winnerId == 0 || loserId == 0)
         {
-            @foreach (var hamster in hamsterList)
+            //Todo error code here ?
+        }
+        else
+        {
+            foreach (var result in resultList)
             {
-                if (winnerId == hamster.Id)
+                @foreach (var hamster in hamsterList)
                 {
-                    Winner = hamster;
+                    if (winnerId == hamster.Id)
+                    {
+                        Winner = hamster;
+                    }
+                    else if (loserId == hamster.Id)
+                    {
+                        Loser = hamster;
+                    }
                 }
-                else if (loserId == hamster.Id)
-                {
-                    Loser = hamster;
-                }
+
             }
         }
     }
@@ -71,6 +75,5 @@
         await _rb.RemoveAllResults();
 
     }
-    }
-
     //TODO POPUP when removing all
+    }

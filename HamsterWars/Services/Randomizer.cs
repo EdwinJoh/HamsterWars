@@ -11,17 +11,25 @@ namespace HamsterWars.Services
     {
         public static (HamsterModel, HamsterModel) Gethamster(List<HamsterModel> hamsters)
         {
-            Random random = new Random();
-
-            HamsterModel hamster1 = hamsters[random.Next(0,hamsters.Count)];
-            HamsterModel hamster2 = hamsters[random.Next(0, hamsters.Count)];
-
-            while(hamster1.Id == hamster2.Id)
+            if (hamsters == null)
             {
-                hamster2 = hamsters[random.Next(0, hamsters.Count)];
+                // return new list so its does not stop the app
+                return (null,null);
             }
-            return(hamster1, hamster2);
+            else
+            {
+                Random random = new Random();
 
+                HamsterModel hamster1 = hamsters[random.Next(0, hamsters.Count)];
+                HamsterModel hamster2 = hamsters[random.Next(0, hamsters.Count)];
+
+                while (hamster1.Id == hamster2.Id)
+                {
+                    hamster2 = hamsters[random.Next(0, hamsters.Count)];
+                }
+                return (hamster1, hamster2);
+
+            }
         }
     }
 }

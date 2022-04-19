@@ -28,9 +28,9 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var result in Results)
+            @foreach (var result in results)
             {
-                @if (result.WinnerId == id)
+                @if (result.WinnerId == Id)
                 {
                     <tr>
                         <td>@result.Id</td>
@@ -46,23 +46,26 @@ else
 
 @code {
     [Parameter]
-    public int id { get; set; }
+    public int Id { get; set; }
     private HamsterModel? SelectedHamster { get; set; }
     public HamsterModel? LoserHamster { get; set; }
     private List<HamsterModel> hamsters = new List<HamsterModel>();
-    private List<ResultModel> Results = new List<ResultModel>();
-
+    private List<ResultModel> results = new List<ResultModel>();
 
     protected override async Task OnInitializedAsync()
     {
         hamsters = await _db.GetHamsters();
-        Results = await _rb.Getresult();
-        SelectedHamster = hamsters.First(h => h.Id == id);
+        results = await _rb.Getresult();
+        SelectedHamster = hamsters.First(h => h.Id == Id);
     }
+    /// <summary>
+    /// Loops true the Hamsterlist and gets the losing hamsters.
+    /// </summary>
+    /// <param name="loserid">Loser id from the results.</param>
+    /// <returns>loing hamster object</returns>
     private HamsterModel GetLoser(int loserid)
     {
         LoserHamster = hamsters.Where(s => s.Id == loserid).Single();
         return LoserHamster;
     }
-
-}
+    }
