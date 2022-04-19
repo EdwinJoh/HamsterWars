@@ -7,19 +7,17 @@
 
 
 <h4>Our Hamsters</h4>
-@if (hamsters is null)
+@if (hamsterList is null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
     <button @onclick="@(()=>_nav.NavigateTo("/addHamster"))" type="button" class="btn btn-primary">Add Hamster</button>
-
     <div class="row">
-        @foreach (var hamster in hamsters)
+        @foreach (var hamster in hamsterList)
         {
             <div class="column">
-
                 <div class="flip-card">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
@@ -34,24 +32,23 @@ else
                         </div>
                     </div>
                 </div>
-
             </div>
         }
     </div>
 }
 
 @code {
-    private List<HamsterModel> hamsters = new List<HamsterModel>();
+    private List<HamsterModel> hamsterList = new List<HamsterModel>();
     protected override async Task OnInitializedAsync()
     {
-        hamsters = await _db.GetHamsters();
+        hamsterList = await _db.GetHamsters();
     }
-
+    /// <summary>
+    /// Method for removing an hamster from the application
+    /// </summary>
     private async Task RemoveHamster(HamsterModel hamster)
     {
         await _db.RemoveHamster(hamster);
-       _nav.NavigateTo(_nav.Uri, forceLoad: true);
+        _nav.NavigateTo(_nav.Uri, forceLoad: true);
     }
-
-    }
-
+}

@@ -16,19 +16,17 @@
     <InputText placeholder="Favorite Food" id="FavFood" @bind-Value="@newHamster.FavFood" />
     <InputText placeholder="Favorite activity" id="Loves" @bind-Value="@newHamster.Loves" />
     <InputText placeholder="Image name" id="ImgName" @bind-Value="@newHamster.ImgName" />
-    <button type="submit" class="btn btn-primary" >Submit</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </EditForm>
 
 
 
 @code {
     private DisplayHamsterModel newHamster = new DisplayHamsterModel();
-    private List<HamsterModel> hamstersList = new List<HamsterModel>();
 
-    protected override async Task OnInitializedAsync()
-    {
-        hamstersList = await _db.GetHamsters();
-    }
+    /// <summary>
+    /// Insert the new hamster created to the database
+    /// </summary>
     private async Task InsertNewHamster()
     {
         HamsterModel hamster = new HamsterModel
@@ -40,9 +38,6 @@
                 ImgName = newHamster.ImgName,
             };
         await _db.InsertHamster(hamster);
-        hamstersList.Add(hamster);
         _nav.NavigateTo("/gallery");
     }
-
-
 }
