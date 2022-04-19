@@ -67,12 +67,12 @@ else
 
 @code
 {
-    private List<HamsterModel>? hamsters;
+    private List<HamsterModel>? hamsterList;
 
-    private HamsterModel? hamster1;
-    private HamsterModel? hamster2;
+    private HamsterModel? competitorOne;
+    private HamsterModel? competitorTwo;
     private ResultModel Result = new ResultModel();
-    private bool result = false;
+    private bool battleDone = false;
     protected override async Task OnInitializedAsync()
     {
         if (hamsterList is null)
