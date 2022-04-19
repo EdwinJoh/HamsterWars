@@ -19,35 +19,39 @@ else
         <p>Favorite Activity: @SelectedHamster.Loves</p>
     </div>
     <table class="table table-dark">
-    <thead>
-        <tr>
-            <th scope="col">Game</th>
-            <th scope="col">Winner</th>
-            <th scope="col">Looser</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-     @*   @foreach (var result in results)
-        {
-            test(result.WinnerId, result.LoserId);
+        <thead>
             <tr>
-                <th scope="row">@result.Id</th>
-                <td>@Winner.Name</td>
-                <td>@Loser.Name</td>
-                <td><button id="removeOne" type="button" onfocus="location.reload()" @onclick="(() => RemoveOne(result))" class="btn btn-danger">Remove Match</button></td>
+                <th scope="col">Game</th>
+                <th scope="col">Winner</th>
+                <th scope="col">Looser</th>
+                <th scope="col"></th>
             </tr>
-        }*@
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var result in Results)
+            {
+                @if (result.WinnerId == id)
+                {
+                    <tr>
+                        <td>@result.Id</td>
+                        <td>@SelectedHamster.Name</td>
+                        <td>@GetLoser(result.LoserId).Name</td>
+                    </tr>
+
+                }
+            }
+        </tbody>
+    </table>
 }
 
 @code {
     [Parameter]
     public int id { get; set; }
-    private HamsterModel SelectedHamster { get; set; }
+    private HamsterModel? SelectedHamster { get; set; }
+    public HamsterModel? LoserHamster { get; set; }
     private List<HamsterModel> hamsters = new List<HamsterModel>();
     private List<ResultModel> Results = new List<ResultModel>();
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -55,11 +59,10 @@ else
         Results = await _rb.Getresult();
         SelectedHamster = hamsters.First(h => h.Id == id);
     }
-    private List<ResultModel> GetHamsterResult(int id)
+    private HamsterModel GetLoser(int loserid)
     {
-        var test = Results.Where(x => x.WinnerId == id).ToList();
-        return test;
-
+        LoserHamster = hamsters.Where(s => s.Id == loserid).Single();
+        return LoserHamster;
     }
 
 }
