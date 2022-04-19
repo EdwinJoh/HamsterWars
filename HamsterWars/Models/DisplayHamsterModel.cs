@@ -9,6 +9,9 @@ namespace HamsterWars.Models
 {
     public class DisplayHamsterModel
     {
+        /// <summary>
+        /// This is our helper when getting an new hamster to the databse , checking if the requirements is inputted right
+        /// </summary>
         public int Id { get; set; }
         [Required]
         [StringLength(20, ErrorMessage = "Name to long")]

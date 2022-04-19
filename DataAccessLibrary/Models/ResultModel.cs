@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataAccessLibrary.Models
 {
+    /// <summary>
+    /// ResultModel from project description
+    /// </summary>
     public class ResultModel
     {
         public int Id { get; set; }

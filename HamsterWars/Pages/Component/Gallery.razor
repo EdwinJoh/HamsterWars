@@ -19,7 +19,6 @@ else
         @foreach (var hamster in hamsters)
         {
             <div class="column">
-
                 <div class="flip-card">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
@@ -34,7 +33,6 @@ else
                         </div>
                     </div>
                 </div>
-
             </div>
         }
     </div>
@@ -50,7 +48,7 @@ else
     private async Task RemoveHamster(HamsterModel hamster)
     {
         await _db.RemoveHamster(hamster);
-       _nav.NavigateTo(_nav.Uri, forceLoad: true);
+        _nav.NavigateTo(_nav.Uri, forceLoad: true);
     }
 
     }

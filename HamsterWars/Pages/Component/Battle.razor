@@ -68,7 +68,6 @@ else
 @code
 {
     private List<HamsterModel>? hamsters;
-
     private HamsterModel? hamster1;
     private HamsterModel? hamster2;
     private ResultModel Result = new ResultModel();
@@ -83,13 +82,14 @@ else
         (hamster1, hamster2) = Randomizer.Gethamster(hamsters);
     }
 
-    private async Task BattleResult(HamsterModel? winner, HamsterModel? loser) // fixa namn på listan
+    private async Task BattleResult(HamsterModel? winner, HamsterModel? loser) 
     {
 
         await _db.InsertLikes(winner);
         await _db.InsertDefeat(loser);
         Result.WinnerId = winner.Id;
         Result.LoserId = loser.Id;
+
         await _bd.InsertBattle(Result);
         winner.Wins++;
         loser.Defeats++;

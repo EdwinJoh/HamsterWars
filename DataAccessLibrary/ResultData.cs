@@ -15,21 +15,39 @@ namespace DataAccessLibrary
         {
             this._db = db;
         }
+        /// <summary>
+        /// Gets all the results from the database
+        /// </summary>
+        /// <returns></returns>
         public Task<List<ResultModel>> Getresult()
         {
             string sql = "Select * from dbo.Results";
             return _db.LoadData<ResultModel, dynamic>(sql, new { });
         }
+        /// <summary>
+        /// Insert battle result to the database
+        /// </summary>
+        /// <param name="battleResult"></param>
+        /// <returns></returns>
         public Task InsertBattle(ResultModel battleResult)
         {
             string sql = $"INSERT INTO dbo.Results( WinnerId,LoserId) VALUES ({battleResult.WinnerId}, {battleResult.LoserId})";
             return _db.Savedata(sql, battleResult);
         }
+        /// <summary>
+        /// Removes one result from the database
+        /// </summary>
+        /// <param name="result"></param>
+        /// <returns></returns>
         public Task RemoveOneResult(ResultModel result)
         {
             string sql = $"DELETE FROM dbo.Results WHERE ID ={result.Id}";
             return _db.Savedata(sql, result);
         }
+        /// <summary>
+        /// Removes all the results from the database 
+        /// </summary>
+        /// <returns></returns>
         public Task RemoveAllResults()
         {
             string sql = "DELETE FROM dbo.Results";
