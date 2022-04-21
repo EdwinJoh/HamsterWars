@@ -54,7 +54,6 @@ else
                 @if (battleDone)
                 {
                     <p>Wins: @competitorTwo.Wins Defeats: @competitorTwo.Defeats</p>
-
                 }
                 else
                 {
@@ -64,26 +63,25 @@ else
         </div>
     </div>
 }
-
 @code
 {
     private List<HamsterModel>? hamsterList;
+    private bool battleDone = false;
 
     private HamsterModel? competitorOne;
     private HamsterModel? competitorTwo;
     private ResultModel Result = new ResultModel();
-    private bool battleDone = false;
+
     protected override async Task OnInitializedAsync()
     {
-        if (hamsterList is null)
+        if (hamsterList == null)
         {
             hamsterList = await _db.GetHamsters();
 
         }
         (competitorOne, competitorTwo) = Randomizer.Gethamster(hamsterList);
     }
-
-    private async Task BattleResult(HamsterModel? winner, HamsterModel? loser) // fixa namn på listan
+    private async Task BattleResult(HamsterModel? winner, HamsterModel? loser)
     {
         await _db.InsertLikes(winner);
         await _db.InsertDefeat(loser);
@@ -92,5 +90,4 @@ else
         await _bd.InsertBattle(Result);
         battleDone = true;
     }
-
 }

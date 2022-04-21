@@ -43,7 +43,10 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        hamsters = await _db.GetHamsters();
+        if (hamsters.Count == 0)
+        {
+            hamsters = await _db.GetHamsters();
+        }
     }
 
     /// <summary>

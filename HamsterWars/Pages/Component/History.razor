@@ -38,31 +38,27 @@
 
     protected override async Task OnInitializedAsync()
     {
-        hamsterList = await _db.GetHamsters();
-        resultList = await _rb.Getresult();
+        if (hamsterList.Count == 0 || resultList.Count == 0)
+        {
+            hamsterList = await _db.GetHamsters();
+            resultList = await _rb.Getresult();
+        }
     }
     private void GetResults(int winnerId, int loserId)
     {
-        if (winnerId == 0 || loserId == 0)
-        {
-            //Todo error code here ?
-        }
-        else
-        {
-            foreach (var result in resultList)
-            {
-                @foreach (var hamster in hamsterList)
-                {
-                    if (winnerId == hamster.Id)
-                    {
-                        Winner = hamster;
-                    }
-                    else if (loserId == hamster.Id)
-                    {
-                        Loser = hamster;
-                    }
-                }
 
+        foreach (var result in resultList)
+        {
+            @foreach (var hamster in hamsterList)
+            {
+                if (winnerId == hamster.Id)
+                {
+                    Winner = hamster;
+                }
+                else if (loserId == hamster.Id)
+                {
+                    Loser = hamster;
+                }
             }
         }
     }

@@ -10,7 +10,7 @@ namespace DataAccessLibrary
     public class ResultData : IResultData
     {
         private readonly ISqlDataAccess _db;
-
+        private string sql;
         public ResultData(ISqlDataAccess db)
         {
             this._db = db;
@@ -21,7 +21,7 @@ namespace DataAccessLibrary
         /// <returns></returns>
         public Task<List<ResultModel>> Getresult()
         {
-            string sql = "Select * from dbo.Results";
+             sql = "Select * from dbo.Results";
             return _db.LoadData<ResultModel, dynamic>(sql, new { });
         }
         /// <summary>
@@ -31,7 +31,7 @@ namespace DataAccessLibrary
         /// <returns></returns>
         public Task InsertBattle(ResultModel battleResult)
         {
-            string sql = $"INSERT INTO dbo.Results( WinnerId,LoserId) VALUES ({battleResult.WinnerId}, {battleResult.LoserId})";
+             sql = $"INSERT INTO dbo.Results( WinnerId,LoserId) VALUES ({battleResult.WinnerId}, {battleResult.LoserId})";
             return _db.Savedata(sql, battleResult);
         }
         /// <summary>
@@ -41,17 +41,17 @@ namespace DataAccessLibrary
         /// <returns></returns>
         public Task RemoveOneResult(ResultModel result)
         {
-            string sql = $"DELETE FROM dbo.Results WHERE ID ={result.Id}";
+             sql = $"DELETE FROM dbo.Results WHERE ID ={result.Id}";
             return _db.Savedata(sql, result);
         }
         /// <summary>
         /// Removes all the results from the database 
         /// </summary>
-        /// <returns></returns>
         public Task RemoveAllResults()
         {
-            string sql = "DELETE FROM dbo.Results";
-            return _db.Savedata(sql, new {});
+             sql = "DELETE FROM dbo.Results";
+            return _db.Savedata(sql, new { });
         }
+       
     }
 }

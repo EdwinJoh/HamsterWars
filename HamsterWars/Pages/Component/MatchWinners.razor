@@ -37,7 +37,6 @@ else
                         <td>@SelectedHamster.Name</td>
                         <td>@GetLoser(result.LoserId).Name</td>
                     </tr>
-
                 }
             }
         </tbody>
@@ -47,25 +46,30 @@ else
 @code {
     [Parameter]
     public int Id { get; set; }
+
     private HamsterModel? SelectedHamster { get; set; }
     public HamsterModel? LoserHamster { get; set; }
+
     private List<HamsterModel> hamsters = new List<HamsterModel>();
     private List<ResultModel> results = new List<ResultModel>();
 
     protected override async Task OnInitializedAsync()
     {
-        hamsters = await _db.GetHamsters();
-        results = await _rb.Getresult();
-        SelectedHamster = hamsters.First(h => h.Id == Id);
+        if (hamsters.Count == 0 || results.Count == 0)
+        {
+            hamsters = await _db.GetHamsters();
+            results = await _rb.Getresult();
+            SelectedHamster = hamsters.First(h => h.Id == Id);
+        }
     }
     /// <summary>
     /// Loops true the Hamsterlist and gets the losing hamsters.
     /// </summary>
-    /// <param name="loserid">Loser id from the results.</param>
+    /// <param name="loserId">Loser id from the results.</param>
     /// <returns>loing hamster object</returns>
-    private HamsterModel GetLoser(int loserid)
+    private HamsterModel GetLoser(int loserId)
     {
-        LoserHamster = hamsters.Where(s => s.Id == loserid).Single();
+        LoserHamster = hamsters.Where(s => s.Id == loserId).Single();
         return LoserHamster;
     }
     }

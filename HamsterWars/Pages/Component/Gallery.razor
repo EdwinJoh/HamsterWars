@@ -24,7 +24,7 @@ else
                             <img src="/Content/Photos/@hamster.ImgName" onerror="this.onerror=null; this.src='/Content/Photos/hamster.jpg.jpg'" alt="" style="width:300px;height:300px;">
                         </div>
                         <div class="flip-card-back">
-                            <h1>@hamster.Name</h1>
+                            <h1><a href="/matchwinners/@hamster.Id">@hamster.Name</a></h1>
                             <p>Age:@hamster.Age</p>
                             <p>Favorite Food:@hamster.FavFood</p>
                             <p>Favorite Activity:@hamster.Loves</p>
@@ -41,12 +41,15 @@ else
     private List<HamsterModel> hamsterList = new List<HamsterModel>();
     protected override async Task OnInitializedAsync()
     {
-        hamsterList = await _db.GetHamsters();
+        if (hamsterList.Count == 0)
+        {
+            hamsterList = await _db.GetHamsters();
+        }
     }
     /// <summary>
-    /// Method for removing an hamster from the application
+    /// Mothod for removing hamster from the application
     /// </summary>
-    private async Task RemoveHamster(HamsterModel hamster)
+      private async Task RemoveHamster(HamsterModel hamster)
     {
         await _db.RemoveHamster(hamster);
         _nav.NavigateTo(_nav.Uri, forceLoad: true);

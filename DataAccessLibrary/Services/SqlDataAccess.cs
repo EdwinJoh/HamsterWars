@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Dapper;
 
+
 namespace DataAccessLibrary
 {
     public class SqlDataAccess : ISqlDataAccess
@@ -23,7 +24,6 @@ namespace DataAccessLibrary
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
                 var data = await connection.QueryAsync<T>(sql, parameters);
-
                 return data.ToList();
             }
         }
@@ -36,10 +36,9 @@ namespace DataAccessLibrary
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
                 await connection.ExecuteAsync(sql, parameters);
-
             }
         }
-       
+
     }
 }
 

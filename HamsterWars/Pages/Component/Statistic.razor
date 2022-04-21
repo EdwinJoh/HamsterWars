@@ -54,7 +54,10 @@ else
     List<HamsterModel> TopFiveLooser = new List<HamsterModel>();
     protected override async Task OnInitializedAsync()
     {
-        hamsters = await _db.GetHamsters();
+        if (hamsters.Count == 0)
+        {
+            hamsters = await _db.GetHamsters();
+        }
         TopFiveWinners = hamsters.OrderByDescending(x => x.Wins).Take(5).ToList();
         TopFiveLooser = hamsters.OrderByDescending(x => x.Defeats).Take(5).ToList();
     }

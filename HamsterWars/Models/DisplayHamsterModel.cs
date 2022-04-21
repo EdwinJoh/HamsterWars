@@ -10,9 +10,10 @@ namespace HamsterWars.Models
     public class DisplayHamsterModel
     {
         /// <summary>
-        /// This is our helper when getting an new hamster to the databse , checking if the requirements is inputted right
+        /// This is our model helper when getting an new hamster to the databse , checking if the requirements is inputted right
         /// </summary>
         public int Id { get; set; }
+
         [Required]
         [StringLength(20, ErrorMessage = "Name to long")]
         [MinLength(1, ErrorMessage = "Name to short")]
@@ -24,8 +25,10 @@ namespace HamsterWars.Models
 
         [StringLength(20, ErrorMessage = "Favourite food too long")]
         public string? FavFood { get; set; }
+
         [StringLength(20, ErrorMessage = "Favourite activity too long")]
         public string? Loves { get; set; }
+
         [Required]
         public string? ImgName { get; set; }
         public int Wins { get; set; }
