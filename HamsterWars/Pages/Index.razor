@@ -17,15 +17,17 @@ else
 {
     <h1>Welcome to Hamster Wars!</h1>
     <div>
-        <div>
+        <div class="center">
             <p1>
                 When you visit the battle site you are meet with two picture's
                 of Two diffrent hamsters. <br />Your objectiv is to choose the cutest hamster out of the two hamsters
             </p1>
+            <div class="text-center">
+                <br />
+                <button type="button" @onclick="@(()=>_nav.NavigateTo("/battle"))" class="btn btn-light">Battle</button>
+                <button type="button" @onclick="@(()=>_nav.NavigateTo("/gallery"))" class="btn btn-light">Gallery</button>
+            </div>
         </div>
-        <br />
-        <button type="button" @onclick="@(()=>_nav.NavigateTo("/battle"))" class="btn btn-danger">Battle</button>
-        <button type="button" @onclick="@(()=>_nav.NavigateTo("/gallery"))" class="btn btn-danger">Gallery</button>
     </div>
 
 }
@@ -38,4 +40,4 @@ else
     }
 
 
-}
+        }
