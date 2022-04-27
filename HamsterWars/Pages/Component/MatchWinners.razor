@@ -46,7 +46,7 @@ else
     public int Id { get; set; }
 
     private HamsterModel? SelectedHamster { get; set; }
-    public HamsterModel? LoserHamster { get; set; }
+    private HamsterModel? LoserHamster { get; set; }
 
     private List<HamsterModel> hamsters = new List<HamsterModel>();
     private List<ResultModel> results = new List<ResultModel>();
@@ -61,13 +61,13 @@ else
         }
     }
     /// <summary>
-    /// Loops true the Hamsterlist and gets the losing hamsters.
+    /// et the loserhamster from GetLoser in services
     /// </summary>
     /// <param name="loserId">Loser id from the results.</param>
-    /// <returns>loing hamster object</returns>
+    /// <returns>losing hamster object</returns>
     private HamsterModel GetLoser(int loserId)
     {
-        LoserHamster = hamsters.Where(s => s.Id == loserId).Single();
+        LoserHamster = Services.GetResults.GetLoser(loserId,hamsters);
         return LoserHamster;
     }
     }
