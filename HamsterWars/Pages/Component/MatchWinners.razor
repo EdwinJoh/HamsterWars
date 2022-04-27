@@ -67,7 +67,7 @@ else
     /// <returns>losing hamster object</returns>
     private HamsterModel GetLoser(int loserId)
     {
-        LoserHamster = Services.GetResults.GetLoser(loserId,hamsters);
+        LoserHamster = Services.GetResults.GetHamsterResult(loserId,hamsters);
         return LoserHamster;
     }
     }

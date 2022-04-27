@@ -45,8 +45,8 @@
     }
     private void GetResults(int winnerID, int loserID)
     {
-        Winner = Services.GetResults.GetLoser(winnerID, hamsterList);
-        Loser = Services.GetResults.GetLoser(loserID, hamsterList);
+        Winner = Services.GetResults.GetHamsterResult(winnerID, hamsterList);
+        Loser = Services.GetResults.GetHamsterResult(loserID, hamsterList);
     }
    
     private async Task RemoveOne(ResultModel result)

@@ -5,7 +5,7 @@ namespace HamsterWars.Services
     public static class GetResults
     {
 
-        public static HamsterModel GetWinner(int id, List<HamsterModel> hamsterList)
+        public static HamsterModel GetHamsterResult(int id, List<HamsterModel> hamsterList)
         {
             if (hamsterList.Any(i => i.Id == id))
             {
@@ -20,16 +20,5 @@ namespace HamsterWars.Services
                 };
             }
         }
-        public static HamsterModel GetLoser(int id, List<HamsterModel> hamsterList)
-        {
-            if (hamsterList.Any(i => i.Id == id))
-            {
-               return hamsterList.Where(c => c.Id == id).Single();
-            }
-            else
-            {
-                return new HamsterModel { Name ="Unknown" };
-            }
-        }
-    }
+           }
 }
