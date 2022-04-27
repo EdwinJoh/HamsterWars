@@ -45,21 +45,9 @@
     }
     private void GetResults(int winnerId, int loserId)
     {
-
-        foreach (var result in resultList)
-        {
-            @foreach (var hamster in hamsterList)
-            {
-                if (winnerId == hamster.Id)
-                {
-                    Winner = hamster;
-                }
-                else if (loserId == hamster.Id)
-                {
-                    Loser = hamster;
-                }
-            }
-        }
+        Winner = hamsterList.Where(s => s.Id == winnerId).Single();
+        Loser = hamsterList.Where(c => c.Id == loserId).Single();
+        
     }
     private async Task RemoveOne(ResultModel result)
     {
