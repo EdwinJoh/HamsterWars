@@ -7,6 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HamsterWars", "HamsterWars\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLibrary", "DataAccessLibrary\DataAccessLibrary.csproj", "{9C227B42-64B7-445C-A73F-CB976F1A5FCF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{BB99F8B9-5059-4EFA-ABBB-24473E6A0FAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infasstructure", "Infasstructure", "{04E618D9-659B-4BC2-BA95-8EDD721CD0A2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{59B083CF-109D-43EB-BB0F-19B38FA2E381}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{98EA0659-8866-4210-AACC-D6E0E11DBF30}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +29,18 @@ Global
 		{9C227B42-64B7-445C-A73F-CB976F1A5FCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C227B42-64B7-445C-A73F-CB976F1A5FCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C227B42-64B7-445C-A73F-CB976F1A5FCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98EA0659-8866-4210-AACC-D6E0E11DBF30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98EA0659-8866-4210-AACC-D6E0E11DBF30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98EA0659-8866-4210-AACC-D6E0E11DBF30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98EA0659-8866-4210-AACC-D6E0E11DBF30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3B11C9D9-9227-4879-9138-BE6E1ABAA28F} = {BB99F8B9-5059-4EFA-ABBB-24473E6A0FAE}
+		{9C227B42-64B7-445C-A73F-CB976F1A5FCF} = {04E618D9-659B-4BC2-BA95-8EDD721CD0A2}
+		{98EA0659-8866-4210-AACC-D6E0E11DBF30} = {59B083CF-109D-43EB-BB0F-19B38FA2E381}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A8F52B8E-1DD8-4F6D-8B88-020FC3A8C206}
