@@ -17,7 +17,8 @@
     <tbody>
         @foreach (var result in resultList)
         {
-            GetResults(result.WinnerId, result.LoserId);
+            GetLoser(result.LoserId);
+            GetWinner(result.WinnerId);
             <tr>
                 <th scope="row">@result.Id</th>
                 <td>@Winner.Name</td>
@@ -43,11 +44,29 @@
             resultList = await _rb.Getresult();
         }
     }
-    private void GetResults(int winnerId, int loserId)
+    private void GetLoser(int id)
     {
-        Winner = hamsterList.Where(s => s.Id == winnerId).Single();
-        Loser = hamsterList.Where(c => c.Id == loserId).Single();
-        
+        if (hamsterList.Any(i => i.Id == id))
+        {
+            Loser = hamsterList.Where(c => c.Id == id).Single();
+        }
+        else
+        {
+            Loser.Name = "Unknown";
+        }
+    }
+    private void GetWinner(int id)
+    {
+        if (hamsterList.Any(i => i.Id == id))
+        {
+            Winner = hamsterList.Where(s => s.Id == id).Single();
+
+        }
+        else
+        {
+            Winner.Name = "Unknown";
+        }
+
     }
     private async Task RemoveOne(ResultModel result)
     {
@@ -58,5 +77,5 @@
         await _rb.RemoveAllResults();
 
     }
-    //TODO POPUP when removing all
+
     }
