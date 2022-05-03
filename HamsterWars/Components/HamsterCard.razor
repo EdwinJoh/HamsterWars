@@ -1,0 +1,34 @@
+﻿@inject IHamsterData _db
+@inject NavigationManager _nav
+
+<div class="column">
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front">
+                <img src="/Content/Photos/@Hamster.ImgName" onerror="this.onerror=null; this.src='/Content/Photos/hamster.jpg.jpg'" alt="" style="width:300px;height:300px;">
+            </div>
+            <div class="flip-card-back">
+                <h1><a href="/matchwinners/@Hamster.Id">@Hamster.Name</a></h1>
+                <p>Age:@Hamster.Age</p>
+                <p>Favorite Food:@Hamster.FavFood</p>
+                <p>Favorite Activity:@Hamster.Loves</p>
+                <button type="button" @onclick="(() => RemoveHamster(Hamster))" class="btn btn-danger">REMOVE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public HamsterModel Hamster { get; set; }
+
+    /// <summary>
+    /// Mothod for removing hamster from the application
+    /// </summary>
+    
+    private async Task RemoveHamster(HamsterModel hamster)
+    {
+        await _db.RemoveHamster(hamster);
+        _nav.NavigateTo(_nav.Uri, forceLoad: true);
+    }
+}

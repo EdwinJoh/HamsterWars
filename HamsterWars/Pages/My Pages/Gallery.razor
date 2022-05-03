@@ -17,22 +17,7 @@ else
     <div class="row">
         @foreach (var hamster in hamsterList)
         {
-            <div class="column">
-                <div class="flip-card">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <img src="/Content/Photos/@hamster.ImgName" onerror="this.onerror=null; this.src='/Content/Photos/hamster.jpg.jpg'" alt="" style="width:300px;height:300px;">
-                        </div>
-                        <div class="flip-card-back">
-                            <h1><a href="/matchwinners/@hamster.Id">@hamster.Name</a></h1>
-                            <p>Age:@hamster.Age</p>
-                            <p>Favorite Food:@hamster.FavFood</p>
-                            <p>Favorite Activity:@hamster.Loves</p>
-                            <button type="button" @onclick="(() => RemoveHamster(hamster))" class="btn btn-danger">REMOVE</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          <HamsterCard Hamster="@hamster"></HamsterCard>
         }
     </div>
 }
@@ -47,12 +32,6 @@ else
             hamsterList = await _db.GetHamsters();
         }
     }
-    /// <summary>
-    /// Mothod for removing hamster from the application
-    /// </summary>
-      private async Task RemoveHamster(HamsterModel hamster)
-    {
-        await _db.RemoveHamster(hamster);
-        _nav.NavigateTo(_nav.Uri, forceLoad: true);
-    }
+
+    
 }

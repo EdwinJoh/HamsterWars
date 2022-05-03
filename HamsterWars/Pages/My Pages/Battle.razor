@@ -1,9 +1,8 @@
-﻿
-@inject IHamsterData _db
+﻿@inject IHamsterData _db
 @inject IResultData _bd
 
 @page "/battle"
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
 
 
 <h3 class="text-center"> Choose the cutest Hamster</h3>
@@ -17,11 +16,8 @@ else
     <div class="row">
         <div class="column" style="float: left">
             <div style="float: left;">
-                <img class="img-thumbnail" src="/Content/Photos/@competitorOne.ImgName">
-                <p class="text-center">@competitorOne.Name</p>
-                <p class="text-left">Age:&nbsp;@competitorOne.Age</p>
-                <p class="text-left">Favorite food:&nbsp;@competitorOne.FavFood</p>
-                <p class="text-left">Favorite activity:&nbsp;@competitorOne.Loves</p>
+
+                <BattleHamster Competotor="@competitorOne"></BattleHamster>
                 @if (battleDone)
                 {
                     <p>Wins: @competitorOne.Wins Defeats: @competitorOne.Defeats</p>
@@ -39,16 +35,13 @@ else
             }
             else
             {
-                <br /> <h1 class="text-center">VS</h1>
+                <h1 class="text-center">VS</h1>
             }
         </div>
         <div class="column" style="float: right">
             <div style="float: right;">
-                <img class="img-thumbnail" src="/Content/Photos/@competitorTwo.ImgName">
-                <p class="text-center">@competitorTwo.Name</p>
-                <p class="text-left">Age:&nbsp;@competitorTwo.Age</p>
-                <p class="text-left">Favorite food:&nbsp;@competitorTwo.FavFood</p>
-                <p class="text-left">Favorite activity:&nbsp;@competitorTwo.Loves</p>
+
+                <BattleHamster Competotor="@competitorTwo"></BattleHamster>
                 @if (battleDone)
                 {
                     <p>Wins: @competitorTwo.Wins Defeats: @competitorTwo.Defeats</p>
@@ -83,9 +76,8 @@ else
     {
         await _db.InsertLikes(winner);
         await _db.InsertDefeat(loser);
-        Result.WinnerId = winner.Id;
-        Result.LoserId = loser.Id;
         await _bd.InsertBattle(Result);
+        Application.Events.BattleEvent.BattleUpdate(winner, loser);
         battleDone = true;
     }
 }

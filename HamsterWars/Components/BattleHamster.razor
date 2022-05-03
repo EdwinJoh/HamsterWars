@@ -1,0 +1,13 @@
+﻿
+<img class="img-thumbnail" src="/Content/Photos/@Competotor.ImgName">
+<p class="text-center">@Competotor.Name</p>
+<p class="text-left">Age:&nbsp;@Competotor.Age</p>
+<p class="text-left">Favorite food:&nbsp;@Competotor.FavFood</p>
+<p class="text-left">Favorite activity:&nbsp;@Competotor.Loves</p>
+
+
+@code {
+    [Parameter]
+    public HamsterModel Competotor { get; set; }
+   
+}
