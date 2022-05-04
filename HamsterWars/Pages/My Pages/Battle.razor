@@ -76,8 +76,9 @@ else
     {
         await _db.InsertLikes(winner);
         await _db.InsertDefeat(loser);
+        Result.WinnerId = winner.Id;
+        Result.LoserId = loser.Id;
         await _bd.InsertBattle(Result);
-        Application.Events.BattleEvent.BattleUpdate(winner, loser);
         battleDone = true;
     }
 }
