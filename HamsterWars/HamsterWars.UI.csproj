@@ -28,8 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Application\Application.csproj" />
-    <ProjectReference Include="..\DataAccessLibrary\DataAccessLibrary.csproj" />
+    <ProjectReference Include="..\Application\HamsterWars.Application.csproj" />
+    <ProjectReference Include="..\DataAccessLibrary\HamsterWars.DataAccessLibrary.csproj" />
   </ItemGroup>
 
 </Project>
