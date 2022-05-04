@@ -1,10 +1,9 @@
 ﻿using DataAccessLibrary;
 
-namespace HamsterWars.Services
+namespace Application.Services
 {
     public static class GetResults
     {
-
         public static HamsterModel GetHamsterResult(int id, List<HamsterModel> hamsterList)
         {
             if (hamsterList.Any(i => i.Id == id))
@@ -20,5 +19,5 @@ namespace HamsterWars.Services
                 };
             }
         }
-           }
+    }
 }

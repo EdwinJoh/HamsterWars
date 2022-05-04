@@ -13,9 +13,16 @@ namespace DataAccessLibrary
     public class HamsterModel
     {
         public int Id { get; set; }
+        [Required]
+        [StringLength(20)]
+        [MinLength(1)]
         public string? Name { get; set; }
+        [Required]
+        [Range(0, 3)]
         public int Age { get; set; }
+        [StringLength(20)]
         public string? FavFood { get; set; }
+        [StringLength(20)]
         public string? Loves { get; set; }
         public string? ImgName { get; set; }
         public int Wins { get; set; }

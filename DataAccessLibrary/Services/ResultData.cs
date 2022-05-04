@@ -41,7 +41,7 @@ namespace DataAccessLibrary
         /// <returns></returns>
         public Task RemoveOneResult(ResultModel result)
         {
-             sql = $"DELETE FROM dbo.Results WHERE ID ={result.Id}";
+             sql = $"DELETE FROM dbo.Results WHERE ID = {result.Id}";
             return _db.Savedata(sql, result);
         }
         /// <summary>

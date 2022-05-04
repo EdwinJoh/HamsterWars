@@ -5,16 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HamsterWars.Services
+namespace Application.Services
 {
-    public static class Randomizer
+    public class Randomizer
     {
         public static (HamsterModel, HamsterModel) Gethamster(List<HamsterModel> hamsters)
         {
             if (hamsters == null)
             {
                 // return new list so its does not stop the app
-                return (null,null);
+                return (null, null);
             }
             else
             {

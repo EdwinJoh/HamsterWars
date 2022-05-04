@@ -18,10 +18,10 @@ namespace DataAccessLibrary
         /// This task Gets all the hamsters from the Database
         /// </summary>
         /// <returns></returns>
-        public Task<List<HamsterModel>> GetHamsters()
+        public async Task<List<HamsterModel>> GetHamsters()
         {
             sql = "select * from dbo.Hamsters";
-            return _db.LoadData<HamsterModel, dynamic>(sql, new { });
+            return await _db.LoadData<HamsterModel, dynamic>(sql, new { });
         }
         /// <summary>
         /// Task that saves our winning hamster object  to the database ( wins and games updated)
@@ -32,7 +32,7 @@ namespace DataAccessLibrary
         {
             sql = @"UPDATE dbo.Hamsters set Wins = @Wins +1, Name = @Name, Age = @Age, FavFood = @FavFood, Loves = @Loves, ImgName = @ImgName, Defeats = @Defeats, Games = @Games +1 
                            WHERE ID = @Id ";
-            return _db.Savedata(sql, hamsters);
+           return _db.Savedata(sql, hamsters);
         }
         /// <summary>
         /// Task that saves our loosing hamster object to the databaase ( defeats and game updated)

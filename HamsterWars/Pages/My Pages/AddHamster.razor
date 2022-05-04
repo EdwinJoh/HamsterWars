@@ -37,6 +37,7 @@
                 ImgName = newHamster.ImgName,
             };
         await _db.InsertHamster(hamster);
+        
         _nav.NavigateTo("/gallery");
     }
 }

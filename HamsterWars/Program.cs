@@ -29,3 +29,5 @@ app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 app.Run();
+
+//TODO Remove Fungerar inte ? result listan måste fixas med förminska vinst och förlust på hamstern

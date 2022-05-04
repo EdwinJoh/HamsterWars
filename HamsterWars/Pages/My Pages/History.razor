@@ -23,7 +23,7 @@
                 <th scope="row">@result.Id</th>
                 <td>@Winner.Name</td>
                 <td>@Loser.Name</td>
-                <td><button id="removeOne" type="button" onfocus="location.reload()" @onclick="(() => RemoveOne(result))" class="btn btn-danger">Remove Match</button></td>
+                <td><button type="button" @onclick="(() => RemoveOneResult(result))" onfocus="location.reload()" class="btn btn-danger">Remove Match</button></td>
             </tr>
         }
     </tbody>
@@ -46,13 +46,16 @@
     }
     private void GetResults(int winnerID, int loserID)
     {
-        Winner = Services.GetResults.GetHamsterResult(winnerID, hamsterList);
-        Loser = Services.GetResults.GetHamsterResult(loserID, hamsterList);
+
+        Winner = Application.Services.GetResults.GetHamsterResult(winnerID, hamsterList);
+        Loser = Application.Services.GetResults.GetHamsterResult(loserID, hamsterList);
+
     }
 
-    private async Task RemoveOne(ResultModel result)
+    private async Task RemoveOneResult(ResultModel result)
     {
         await _rb.RemoveOneResult(result);
+        resultList.RemoveAll(x => x.Id == result.Id);
     }
     private async Task RemoveAll()
     {

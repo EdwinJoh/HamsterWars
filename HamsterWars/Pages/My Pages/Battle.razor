@@ -70,7 +70,7 @@ else
             hamsterList = await _db.GetHamsters();
 
         }
-        (competitorOne, competitorTwo) = Randomizer.Gethamster(hamsterList);
+        (competitorOne, competitorTwo) = Application.Services.Randomizer.Gethamster(hamsterList);
     }
     private async Task BattleResult(HamsterModel? winner, HamsterModel? loser)
     {

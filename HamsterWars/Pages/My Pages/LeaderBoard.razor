@@ -1,5 +1,6 @@
 ﻿@page "/leaderboard"
 
+
 @inject IHamsterData _db
 
 <h3>Statistics</h3>
@@ -27,7 +28,7 @@ else
                     <td>@hamster.Name</td>
                     <td>@hamster.Age</td>
                     <td>@hamster.Wins</td>
-                    <td>@PercentCalculator.WinRateCalculator(@hamster.Wins,@hamster.Games)%</td>
+                    <td>@Application.Services.PercentCalculator.WinRateCalculator(@hamster.Wins,@hamster.Games)%</td>   
                 </tr>
             }
         </tbody>
@@ -46,6 +47,8 @@ else
         if (hamsters.Count == 0)
         {
             hamsters = await _db.GetHamsters();
+            hamsters.OrderByDescending(x => x.Wins);
+
         }
     }
 
