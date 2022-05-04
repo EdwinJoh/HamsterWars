@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HamsterWars.UI", "HamsterWars\HamsterWars.UI.csproj", "{3B11C9D9-9227-4879-9138-BE6E1ABAA28F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HamsterWars", "HamsterWars\HamsterWars.csproj", "{3B11C9D9-9227-4879-9138-BE6E1ABAA28F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HamsterWars.DataAccessLibrary", "DataAccessLibrary\HamsterWars.DataAccessLibrary.csproj", "{9C227B42-64B7-445C-A73F-CB976F1A5FCF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLibrary", "DataAccessLibrary\DataAccessLibrary.csproj", "{9C227B42-64B7-445C-A73F-CB976F1A5FCF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{BB99F8B9-5059-4EFA-ABBB-24473E6A0FAE}"
 EndProject
@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infasstructure", "Infasstru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{59B083CF-109D-43EB-BB0F-19B38FA2E381}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HamsterWars.Domain", "Domain\HamsterWars.Domain.csproj", "{98EA0659-8866-4210-AACC-D6E0E11DBF30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{98EA0659-8866-4210-AACC-D6E0E11DBF30}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{ACFCC404-2600-4DC6-80BC-8CBA6A01F126}"
 EndProject
